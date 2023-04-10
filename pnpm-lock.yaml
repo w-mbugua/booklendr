@@ -58,11 +58,17 @@ dependencies:
 
 devDependencies:
   '@graphql-codegen/cli':
-    specifier: ^3.3.0
+    specifier: 3.3.0
     version: 3.3.0(@babel/core@7.21.4)(@types/node@18.15.11)(graphql@16.6.0)
   '@graphql-codegen/client-preset':
-    specifier: ^3.0.0
+    specifier: 3.0.0
     version: 3.0.0(graphql@16.6.0)
+  '@graphql-codegen/introspection':
+    specifier: 3.0.1
+    version: 3.0.1(graphql@16.6.0)
+  '@graphql-codegen/typescript':
+    specifier: ^3.0.3
+    version: 3.0.3(graphql@16.6.0)
 
 packages:
 
@@ -2040,6 +2046,20 @@ packages:
       '@graphql-codegen/visitor-plugin-common': 3.1.0(graphql@16.6.0)
       '@graphql-tools/utils': 9.2.1(graphql@16.6.0)
       auto-bind: 4.0.0
+      graphql: 16.6.0
+      tslib: 2.5.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: true
+
+  /@graphql-codegen/introspection@3.0.1(graphql@16.6.0):
+    resolution: {integrity: sha512-D6vJQTEL/np4EmeUHm5spLK59cr+AMXEoLRoTI+dagFzlHYDTfXZH6F7uhKaakxcj0SAQhIWKvGMggotUdEtyg==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 4.2.0(graphql@16.6.0)
+      '@graphql-codegen/visitor-plugin-common': 3.1.0(graphql@16.6.0)
       graphql: 16.6.0
       tslib: 2.5.0
     transitivePeerDependencies:
