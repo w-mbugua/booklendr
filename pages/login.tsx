@@ -9,6 +9,7 @@ import {
   FormControl,
   FormErrorMessage,
 } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js'
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { useFormik } from 'formik';
 import React from 'react';
@@ -52,7 +53,7 @@ function Login() {
       <form onSubmit={formik.handleSubmit}>
         <Stack spacing={3}>
           <Text fontSize="sm" ml={2} color="red">
-            {data?.login?.error.length && data.login.error[0].message}
+            {data?.login?.error && data.login.error[0].message}
           </Text>
           <FormControl
             isInvalid={
@@ -108,6 +109,9 @@ function Login() {
           >
             Login
           </Button>
+          <Text fontSize="md">
+            Don&apos;t have an account? <Link href="/register" color="blue.400" _hover={{color: "blue.600"}}>register here</Link>
+          </Text>
         </Stack>
       </form>
     </AuthWrapper>

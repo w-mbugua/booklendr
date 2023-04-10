@@ -1,3 +1,13 @@
+:root {
+  --color--blue-light: #E8ECEB;
+  --color-slate-gray: #94A7AE;
+  --color-lavender: #C0A9BD;
+  --color-brown: #E09E50;
+  --color-olive: #647669;
+  --color-dark-blue: #2D3E4E;
+  --color-white: #fff;
+}
+
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -14,6 +24,10 @@
   3. Allow percentage-based heights in the application
 */
 html, body {
+  height: 100%;
+}
+
+div#__next {
   height: 100%;
 }
 /*
