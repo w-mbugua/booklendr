@@ -21,6 +21,16 @@ const theme = extendTheme({
       white: '#fff',
     },
   },
+  styles: {
+    global: {
+      body: {},
+      a: {
+        _hover: {
+          textDecoration: 'none!important',
+        },
+      },
+    },
+  },
 });
 
 export default function App({ Component, pageProps }: AppProps) {

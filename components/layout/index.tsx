@@ -15,18 +15,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       gap="1"
       color="blackAlpha.700"
       fontWeight="bold"
+      bg="primaries.lightBlue"
     >
-      <GridItem pl="2" bg="orange.300" area={'header'} display="grid" alignItems="center">
+      <GridItem pl="2" area={'header'} display="grid" alignItems="center">
         <Header />
       </GridItem>
-      <GridItem bg="pink.300" area={'nav'}>
+      <GridItem bg="primaries.white" area={'nav'}>
         <Sidebar />
       </GridItem>
-      <GridItem pl="2" bg="green.300" area={'main'}>
+      <GridItem pl="2" area={'main'}>
         {children}
       </GridItem>
-      <GridItem pl="2" bg="blue.300" area={'footer'}>
-        <Footer />
+      <GridItem pl="2" area={'footer'}>
+        {/* <Footer /> */}
       </GridItem>
     </Grid>
   );
