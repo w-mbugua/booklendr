@@ -1,3 +1,4 @@
+import NewBook from '@/components/new-book';
 import { Link } from '@chakra-ui/next-js';
 import { Box, Button } from '@chakra-ui/react';
 import NavButton from '../nav-button';
@@ -15,9 +16,7 @@ export default function Header() {
         <Link href="/">Free Books</Link>
       </NavButton>
       <SearchBar />
-      <NavButton>
-        <Link href="/">New Book</Link>
-      </NavButton>
+      <NewBook />
       <NavButton>
         <Link href="/">Borrow</Link>
       </NavButton>
