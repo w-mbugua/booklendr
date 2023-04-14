@@ -10,13 +10,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 					"nav main"
 					"nav footer"`}
       gridTemplateRows={'80px 1fr auto'}
-      gridTemplateColumns={'150px 1fr'}
+      gridTemplateColumns={'200px 1fr'}
       height="100%"
       gap="1"
       color="blackAlpha.700"
       bg="primaries.lightBlue"
     >
-      <GridItem pl="2" area={'header'} display="grid" alignItems="center">
+      <GridItem
+        pl="2"
+        area={'header'}
+        display="grid"
+        alignItems="center"
+      >
         <Header />
       </GridItem>
       <GridItem bg="primaries.white" area={'nav'}>

@@ -20,7 +20,7 @@ interface BookCardProps {
 const BookCard = ({ book }: BookCardProps) => {
   const bg = useColorModeValue('white', 'gray.800');
   const borderColor = useColorModeValue('gray.200', 'gray.600');
-  const { data: user } = useQuery(CurrentUserDocument);
+  const { data } = useQuery(CurrentUserDocument);
 
   return (
     <Box
@@ -34,7 +34,7 @@ const BookCard = ({ book }: BookCardProps) => {
     >
       <Flex justifyContent="space-between" alignItems="center" my="3">
         <Text fontSize="sm">
-          {user && user.id === book.owner.id ? 'me' : book.owner.username}
+          @{data && data.currentUser.id === book.owner.id ? 'me' : book.owner.username}
         </Text>
         <Text fontSize="sm">
           {moment(book.createdAt).format('Do MMM YYYY')}
@@ -69,11 +69,10 @@ const BookCard = ({ book }: BookCardProps) => {
             <Box mt="1" as="h6" lineHeight="tight" isTruncated>
               {book.subtitle}
             </Box>
-
             <Text mt="2" color={useColorModeValue('gray.600', 'gray.400')}>
               by {book.author.name}
             </Text>
-            {user && user.id !== book.owner.id && (
+            {data && data.currentUser.id !== book.owner.id && (
               <Box>
                 <Button
                   size="sm"

@@ -11,7 +11,7 @@ export default function Home() {
     <GuestGuard>
       <Layout>
         <Grid templateColumns="repeat(5, 1fr)">
-          <GridItem w="50%" colSpan={1} />
+          <GridItem colSpan={1} />
           <GridItem colSpan={3}>
             {data && (
               <Box>
