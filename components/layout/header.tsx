@@ -1,6 +1,6 @@
 import NewBook from '@/components/new-book';
-import { CurrentUserDocument } from '@/generated/gql/graphql';
-import { useQuery } from '@apollo/client';
+import { CurrentUserDocument, LogoutDocument } from '@/generated/gql/graphql';
+import { useApolloClient, useMutation, useQuery } from '@apollo/client';
 import { startCase } from 'lodash';
 import { Link } from '@chakra-ui/next-js';
 import { Box, Button, Text } from '@chakra-ui/react';
@@ -9,6 +9,8 @@ import SearchBar from './searchbar';
 
 export default function Header() {
   const { data } = useQuery(CurrentUserDocument);
+  const [logout] = useMutation(LogoutDocument);
+  const apolloClient = useApolloClient();
 
   return (
     <Box
@@ -32,7 +34,14 @@ export default function Header() {
       <NavButton>
         <Link href="/">Borrow</Link>
       </NavButton>
-      <Button bg="primaries.olive" variant="outline">
+      <Button
+        bg="primaries.olive"
+        variant="outline"
+        onClick={async () => {
+          await logout({});
+          apolloClient.resetStore()
+        }}
+      >
         logout
       </Button>
     </Box>
