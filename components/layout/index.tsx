@@ -14,7 +14,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       height="100%"
       gap="1"
       color="blackAlpha.700"
-      fontWeight="bold"
       bg="primaries.lightBlue"
     >
       <GridItem pl="2" area={'header'} display="grid" alignItems="center">
