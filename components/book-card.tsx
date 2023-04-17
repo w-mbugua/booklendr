@@ -14,7 +14,7 @@ import moment from 'moment';
 import Image from 'next/image';
 import { useQuery } from '@apollo/client';
 
-interface BookCardProps {
+export interface BookCardProps {
   book: Book;
 }
 const BookCard = ({ book }: BookCardProps) => {
