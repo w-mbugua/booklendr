@@ -9,7 +9,7 @@ import {
   FormControl,
   FormErrorMessage,
 } from '@chakra-ui/react';
-import { Link } from '@chakra-ui/next-js'
+import { Link } from '@chakra-ui/next-js';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { useFormik } from 'formik';
 import React from 'react';
@@ -29,7 +29,9 @@ function Login() {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required'),
-    password: Yup.string().min(6, 'Password must be longer than 6 characters').required('Password is required'),
+    password: Yup.string()
+      .min(6, 'Password must be longer than 6 characters')
+      .required('Password is required'),
   });
 
   const formik = useFormik({
@@ -65,6 +67,7 @@ function Login() {
               background="white"
               placeholder="Username"
               size="lg"
+              fontSize="sm"
               onChange={formik.handleChange}
               isInvalid={
                 formik.touched.username && Boolean(formik.errors.username)
@@ -80,7 +83,7 @@ function Login() {
               formik.touched.password && Boolean(formik.errors.password)
             }
           >
-            <InputGroup background="white" size="lg">
+            <InputGroup fontSize="sm" background="white" size="lg">
               <Input
                 name="password"
                 pr="4.5rem"
@@ -105,12 +108,20 @@ function Login() {
           <Button
             type="submit"
             rightIcon={<ArrowForwardIcon />}
-            colorScheme="blackAlpha"
+            bg="primaries.olive"
+            color="primaries.white"
           >
             Login
           </Button>
           <Text fontSize="md">
-            Don&apos;t have an account? <Link href="/register" color="blue.400" _hover={{color: "blue.600"}}>register here</Link>
+            Don&apos;t have an account?{' '}
+            <Link
+              href="/register"
+              color="blue.400"
+              _hover={{ color: 'blue.600' }}
+            >
+              register here
+            </Link>
           </Text>
         </Stack>
       </form>

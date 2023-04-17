@@ -33,7 +33,8 @@ const theme = extendTheme({
     global: {
       body: {
         p: {
-          color: '#000!important',
+          color: '#000',
+          fontSize: '16px'
         },
         h4: {
           color: '#000!important',
