@@ -8,7 +8,13 @@ interface WrapperProps {
 
 export default function Wrapper({ children, variant }: WrapperProps) {
   return (
-    <Box mt="8" mx="auto" width={variant === 'small' ? 'sm' : 'md'}>
+    <Box
+      mt="8"
+      mx="auto"
+      width={variant === 'small' ? 'sm' : 'md'}
+      backgroundColor="primaries.white"
+      padding={6}
+    >
       {children}
     </Box>
   );
