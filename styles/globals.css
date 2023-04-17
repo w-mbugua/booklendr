@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
 :root {
   --color--blue-light: #E8ECEB;
   --color-slate-gray: #94A7AE;
@@ -28,6 +30,7 @@ html, body {
 }
 body {
   background-color: var(--color--blue-light);
+  font-family: 'Merriweather', serif;
 }
 
 div#__next {
