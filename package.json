@@ -39,7 +39,6 @@
     "@graphql-codegen/cli": "3.3.0",
     "@graphql-codegen/client-preset": "3.0.0",
     "@graphql-codegen/introspection": "3.0.1",
-    "@graphql-codegen/typescript": "^3.0.3",
-    "sass": "^1.61.0"
+    "@graphql-codegen/typescript": "^3.0.3"
   }
 }
