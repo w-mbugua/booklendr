@@ -14,5 +14,7 @@ export default function useAuth() {
     }
   }, [data]);
 
+  console.log({ isLoggedIn });
+
   return [currentUser, isLoggedIn];
 }

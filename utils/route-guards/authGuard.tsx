@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [isLoggedIn] = useAuth();
+  const [_, isLoggedIn] = useAuth();
 
   useEffect(() => {
     if (isLoggedIn) {
