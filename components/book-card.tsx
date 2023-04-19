@@ -9,13 +9,13 @@ import {
   GridItem,
   Button,
 } from '@chakra-ui/react';
-import { Book, CurrentUserDocument } from '@/generated/gql/graphql';
+import { Book, CurrentUserDocument, GetBooksQuery } from '@/generated/gql/graphql';
 import moment from 'moment';
 import Image from 'next/image';
 import { useQuery } from '@apollo/client';
 
 export interface BookCardProps {
-  book: Book;
+  book: GetBooksQuery['getBooks'][0]
 }
 const BookCard = ({ book }: BookCardProps) => {
   const bg = useColorModeValue('white', 'gray.800');

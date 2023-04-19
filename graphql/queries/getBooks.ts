@@ -8,7 +8,9 @@ const getAllBooks = graphql(`
       subtitle
       description
       textSnippet
+      createdAt
       cover
+      thumbnail
       status
       author {
         name

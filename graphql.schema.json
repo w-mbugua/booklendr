@@ -289,6 +289,18 @@
             "deprecationReason": null
           },
           {
+            "name": "thumbnail",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "title",
             "description": null,
             "args": [],
@@ -586,7 +598,7 @@
             "deprecationReason": null
           },
           {
-            "name": "username",
+            "name": "phoneNumber",
             "description": null,
             "type": {
               "kind": "SCALAR",

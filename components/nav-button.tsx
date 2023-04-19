@@ -7,7 +7,6 @@ export default function NavButton({ children }: { children: React.ReactNode }) {
       h="2.5rem"
       display="inline-flex"
       alignItems="center"
-      borderBottom="1px solid"
       color="primaries.olive"
       _hover={{
         borderRadius: '0.375rem',

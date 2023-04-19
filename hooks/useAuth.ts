@@ -1,20 +1,18 @@
-import { CurrentUserDocument } from '@/generated/gql/graphql';
+import { CurrentUserDocument, CurrentUserQuery } from '@/generated/gql/graphql';
 import { useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
 export default function useAuth() {
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState<CurrentUserQuery['currentUser']>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { data } = useQuery(CurrentUserDocument);
 
   useEffect(() => {
-    if (data && Object.values(data.currentUser).length) {
+    if (data?.currentUser) {
       setIsLoggedIn(true);
       setCurrentUser(data.currentUser);
     }
   }, [data]);
 
-  console.log({ isLoggedIn });
-
-  return [currentUser, isLoggedIn];
+  return { currentUser, isLoggedIn };
 }
