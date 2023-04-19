@@ -59,7 +59,6 @@ export default function NewBook() {
         variant="ghost"
         color="primaries.olive"
         borderRadius={0}
-        borderBottom="1px solid"
         onClick={onOpen}
         _hover={{
           backgroundColor: 'primaries.olive',

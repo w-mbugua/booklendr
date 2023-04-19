@@ -7,14 +7,13 @@ interface guardProps {
 }
 export default function GuestGuard({ children }: guardProps) {
   const router = useRouter();
-  const [_, isLoggedIn] = useAuth();
+  const {isLoggedIn} = useAuth();
 
   useEffect(() => {
-    console.log('NOT', isLoggedIn);
     if (!isLoggedIn) {
       router.replace('/');
     }
-  }, [isLoggedIn, router]);
+  }, [isLoggedIn]);
 
   return <>{children}</>;
 }

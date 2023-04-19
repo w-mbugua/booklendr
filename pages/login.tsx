@@ -8,6 +8,7 @@ import {
   Stack,
   FormControl,
   FormErrorMessage,
+  FormLabel,
 } from '@chakra-ui/react';
 import { Link } from '@chakra-ui/next-js';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
@@ -17,6 +18,8 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
 import { LoginUserDocument } from '@/generated/gql/graphql';
+import { isEmail, isValidPhone } from '@/utils/helpers';
+import useAuth from '../hooks/useAuth';
 
 function Login() {
   const router = useRouter();
@@ -24,11 +27,25 @@ function Login() {
   const handleClick = () => setShow(!show);
 
   const [login, { data, error, loading }] = useMutation(LoginUserDocument);
-
-  console.log(data);
+  const { currentUser, isLoggedIn } = useAuth();
+  
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required'),
+    username: Yup.string().test((username) => {
+      if (
+        username &&
+        (isEmail(username as string) ||
+          isValidPhone((username as string).replace(/\s/g, '')))
+      ) {
+        return true;
+      }
+
+      return new Yup.ValidationError(
+        'Invalid email or phone number',
+        undefined,
+        'username'
+      );
+    }),
     password: Yup.string()
       .min(6, 'Password must be longer than 6 characters')
       .required('Password is required'),
@@ -40,9 +57,19 @@ function Login() {
       password: '',
     },
     validationSchema,
-    onSubmit: async (values) => {
-      console.log(values);
-      await login({ variables: values });
+    onSubmit: async (data) => {
+      const vals = {
+        ...data,
+        email: isEmail(data.username) ? data.username : '',
+        phoneNumber: isValidPhone(data.username.replace(/\s/g, ''))
+          ? data.username.replace(/\s/g, '')
+          : '',
+      };
+
+      const response = await login({ variables: vals });
+      if (response.data?.login.member) {
+        router.replace('/home');
+      }
     },
   });
 
@@ -62,10 +89,10 @@ function Login() {
               formik.touched.username && Boolean(formik.errors.username)
             }
           >
+            <FormLabel fontSize="sm">Email or Phone Number:</FormLabel>
             <Input
               name="username"
               background="white"
-              placeholder="Username"
               size="lg"
               fontSize="sm"
               onChange={formik.handleChange}
@@ -83,12 +110,12 @@ function Login() {
               formik.touched.password && Boolean(formik.errors.password)
             }
           >
+            <FormLabel fontSize="sm">Password:</FormLabel>
             <InputGroup fontSize="sm" background="white" size="lg">
               <Input
                 name="password"
                 pr="4.5rem"
                 type={show ? 'text' : 'password'}
-                placeholder="Enter password"
                 onChange={formik.handleChange}
                 isInvalid={
                   formik.touched.password && Boolean(formik.errors.password)
@@ -107,9 +134,14 @@ function Login() {
           </FormControl>
           <Button
             type="submit"
+            isLoading={formik.isSubmitting}
             rightIcon={<ArrowForwardIcon />}
             bg="primaries.olive"
             color="primaries.white"
+            _hover={{
+              backgroundColor: 'primaries.olive',
+              color: 'black',
+            }}
           >
             Login
           </Button>
@@ -120,7 +152,7 @@ function Login() {
               color="blue.400"
               _hover={{ color: 'blue.600' }}
             >
-              register here
+              signup
             </Link>
           </Text>
         </Stack>
