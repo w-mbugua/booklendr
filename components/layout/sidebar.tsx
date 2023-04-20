@@ -6,7 +6,7 @@ import {
   HomeIcon,
   BookOpenIcon,
   BellAlertIcon,
-  ArrowLeftOnRectangleIcon
+  ArrowLeftOnRectangleIcon,
 } from '@heroicons/react/24/solid';
 import useAuth from '@/hooks/useAuth';
 import { startCase } from 'lodash';
@@ -16,13 +16,15 @@ export default function Sidebar() {
   return (
     <Box
       height="100%"
-      w="100%"
       display="flex"
       flexDirection="column"
       alignItems="center"
+      position="fixed"
+      top="0"
+      left="0"
     >
       <Box>
-        <Logo />
+        {/* <Logo /> */}
         <Box padding={4}>
           <Text
             fontSize="lg"

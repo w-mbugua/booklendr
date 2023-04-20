@@ -16,10 +16,14 @@ export default function Header() {
 
   return (
     <Box
-      color="white"
-      display="flex"
-      justifyContent="space-evenly"
-      alignItems="end"
+      backgroundImage="url('/header2.png')"
+      filter="brightness(0.5) contrast(1.2) blur(1px)"
+      opacity="0.7"
+      backgroundSize="cover"
+      backgroundPosition="center"
+      backgroundRepeat="no-repeat"
+      width="100%"
+      height="100%"
     ></Box>
   );
 }
