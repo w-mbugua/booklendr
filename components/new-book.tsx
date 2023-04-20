@@ -1,6 +1,7 @@
 import MainModal from '@/components/modal';
 import { AddBookDocument } from '@/generated/gql/graphql';
 import { useMutation } from '@apollo/client';
+import { AddIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -56,9 +57,10 @@ export default function NewBook() {
   return (
     <>
       <Button
-        variant="ghost"
-        color="primaries.olive"
-        borderRadius={0}
+        variant="outline"
+        size="sm"
+        colorScheme='tomato'
+        leftIcon={<AddIcon />}
         onClick={onOpen}
         _hover={{
           backgroundColor: 'primaries.olive',

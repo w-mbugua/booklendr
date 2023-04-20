@@ -4,7 +4,7 @@ import SearchBar from '@/components/layout/searchbar';
 import NewBook from '@/components/new-book';
 import { GetBooksDocument } from '@/generated/gql/graphql';
 import { useQuery } from '@apollo/client';
-import { Box, Flex, Tag, TagLabel, Text } from '@chakra-ui/react';
+import { Box, Flex, HStack, Tag, TagLabel, Text } from '@chakra-ui/react';
 import { size } from 'lodash';
 import { useEffect, useState } from 'react';
 
@@ -24,9 +24,11 @@ export default function Home() {
 
   return (
     <Layout>
-      <Flex>
+      <Flex marginTop="4em">
         <Box w="70%" display="grid" justifyContent="center">
-          <NewBook />
+          <HStack justifyContent="end">
+            <NewBook />
+          </HStack>
           {data && data.getBooks.length ? (
             <Box w="auto" display="flex" flexDirection="column">
               {data.getBooks.map((book) => (
@@ -39,7 +41,7 @@ export default function Home() {
         </Box>
         <Box height="100%">
           <Box>
-          <SearchBar />
+            <SearchBar />
           </Box>
           <br />
           <Box
