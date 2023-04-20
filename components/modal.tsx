@@ -14,9 +14,10 @@ interface ModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  header: string;
+  header?: string;
   children: React.ReactNode;
-  initialRef: MutableRefObject<null>
+  initialRef?: MutableRefObject<null>;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | 'full';
 }
 
 export default function MainModal({
@@ -25,11 +26,17 @@ export default function MainModal({
   onClose,
   children,
   header,
-  initialRef
+  initialRef,
+  size = 'md',
 }: ModalProps) {
   return (
     <>
-      <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
+      <Modal
+        initialFocusRef={initialRef}
+        size={size}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{header}</ModalHeader>
