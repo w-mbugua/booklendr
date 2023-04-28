@@ -92,6 +92,7 @@ function Login() {
             <FormLabel fontSize="sm">Email or Phone Number:</FormLabel>
             <Input
               name="username"
+              id='username'
               background="white"
               size="lg"
               fontSize="sm"
@@ -114,6 +115,7 @@ function Login() {
             <InputGroup fontSize="sm" background="white" size="lg">
               <Input
                 name="password"
+                id='password'
                 pr="4.5rem"
                 type={show ? 'text' : 'password'}
                 onChange={formik.handleChange}
@@ -134,6 +136,7 @@ function Login() {
           </FormControl>
           <Button
             type="submit"
+            id="login-btn"
             isLoading={formik.isSubmitting}
             rightIcon={<ArrowForwardIcon />}
             bg="primaries.olive"

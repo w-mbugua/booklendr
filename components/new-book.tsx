@@ -1,5 +1,9 @@
 import MainModal from '@/components/modal';
-import { AddBookDocument } from '@/generated/gql/graphql';
+import {
+  AddBookDocument,
+  GetBooksDocument,
+  GetBooksQuery,
+} from '@/generated/gql/graphql';
 import { useMutation } from '@apollo/client';
 import { AddIcon } from '@chakra-ui/icons';
 import {
@@ -9,23 +13,37 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Text,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 
 const bookSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
   author: Yup.string().required('Author is required'),
-  tag: Yup.string().required('Book Category is required'),
+  tag: Yup.string().required('Book category is required'),
 });
 
 export default function NewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [addBook, { data, error, loading }] = useMutation(AddBookDocument);
-  const toast = useToast()
+  const [error, setError] = useState('');
+  const [addBook, { data, loading }] = useMutation(AddBookDocument, {
+    refetchQueries: [{ query: GetBooksDocument }],
+    onError: (error) => {
+      setError(error.graphQLErrors[0].message);
+    },
+    // update: (cache, response) => {
+    //   cache.updateQuery({ query: GetBooksDocument }, (res) => {
+    //     return {
+    //       getBooks: res?.getBooks.concat(response.data?.addBook || []) || [],
+    //     };
+    //   });
+    // },
+  });
+  const toast = useToast();
 
   const initialRef = React.useRef(null);
 
@@ -37,7 +55,7 @@ export default function NewBook() {
         status: 'success',
         duration: 2000,
         isClosable: true,
-      })
+      });
       onClose();
     }
   }, [data, loading, onClose]);
@@ -59,7 +77,7 @@ export default function NewBook() {
       <Button
         variant="outline"
         size="sm"
-        colorScheme='tomato'
+        colorScheme="tomato"
         leftIcon={<AddIcon />}
         onClick={onOpen}
         _hover={{
@@ -77,6 +95,9 @@ export default function NewBook() {
         onClose={onClose}
         header="Add a New Book"
       >
+        <Text fontSize="sm" color="red">
+          {error}
+        </Text>
         <form onSubmit={formik.handleSubmit}>
           <FormControl
             isInvalid={formik.touched.title && Boolean(formik.errors.title)}
@@ -84,12 +105,13 @@ export default function NewBook() {
             <FormLabel>Title</FormLabel>
             <Input
               name="title"
+              id="book-title"
               size="lg"
               ref={initialRef}
               onChange={formik.handleChange}
               isInvalid={formik.touched.title && Boolean(formik.errors.title)}
             />
-            <FormErrorMessage fontSize="xs" color="red.600">
+            <FormErrorMessage id="title-error" fontSize="xs" color="red.600">
               {formik.errors.title}
             </FormErrorMessage>
           </FormControl>
@@ -101,11 +123,12 @@ export default function NewBook() {
             <FormLabel>Author</FormLabel>
             <Input
               name="author"
+              id="author"
               size="lg"
               onChange={formik.handleChange}
               isInvalid={formik.touched.author && Boolean(formik.errors.author)}
             />
-            <FormErrorMessage fontSize="xs" color="red.600">
+            <FormErrorMessage id="author-error" fontSize="xs" color="red.600">
               {formik.errors.author}
             </FormErrorMessage>
           </FormControl>
@@ -116,11 +139,12 @@ export default function NewBook() {
             <FormLabel>Category</FormLabel>
             <Input
               name="tag"
+              id="tag"
               size="lg"
               onChange={formik.handleChange}
               isInvalid={formik.touched.tag && Boolean(formik.errors.tag)}
             />
-            <FormErrorMessage fontSize="xs" color="red.600">
+            <FormErrorMessage id="tag-error" fontSize="xs" color="red.600">
               {formik.errors.tag}
             </FormErrorMessage>
           </FormControl>
@@ -128,6 +152,7 @@ export default function NewBook() {
             <Button
               variant="solid"
               type="submit"
+              id="new-book-btn"
               background="primaries.olive"
               color="primaries.white"
               mr={3}

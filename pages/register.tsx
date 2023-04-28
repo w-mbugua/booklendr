@@ -30,7 +30,7 @@ function Register() {
   console.log(response);
 
   useEffect(() => {
-    if (data.register.member && !data.register.error) {
+    if (data?.register.member && !data?.register.error) {
       router.replace('/login');
     }
   }, [data, router]);
@@ -69,7 +69,7 @@ function Register() {
       <form onSubmit={formik.handleSubmit}>
         <Stack spacing={3}>
           <Text fontSize="sm" ml={2} color="red">
-            {data?.login?.error && data.login.error[0].message}
+            {data?.register?.error && data.register.error[0].message}
           </Text>
           <FormControl
             margin={1}
@@ -80,6 +80,7 @@ function Register() {
             <FormLabel fontSize="sm">Username: *</FormLabel>
             <Input
               name="username"
+              id="username"
               background="white"
               size="md"
               onChange={formik.handleChange}
@@ -99,6 +100,7 @@ function Register() {
             <FormLabel fontSize="sm">Email Address *</FormLabel>
             <Input
               name="email"
+              id="email"
               background="white"
               size="md"
               onChange={formik.handleChange}
@@ -118,6 +120,7 @@ function Register() {
             <FormLabel fontSize="sm">Phone Number</FormLabel>
             <Input
               name="phoneNumber"
+              id="phoneNumber"
               background="white"
               size="md"
               onChange={formik.handleChange}
@@ -139,6 +142,7 @@ function Register() {
             <InputGroup background="white" size="md">
               <Input
                 name="password"
+                id="password"
                 pr="4.5rem"
                 type={show ? 'text' : 'password'}
                 onChange={formik.handleChange}
@@ -157,7 +161,12 @@ function Register() {
               {formik.errors.password}
             </FormErrorMessage>
           </FormControl>
-          <Button type="submit" colorScheme="blackAlpha" bg="primaries.olive">
+          <Button
+            type="submit"
+            id="register-btn"
+            colorScheme="blackAlpha"
+            bg="primaries.olive"
+          >
             Register
           </Button>
           <Text fontSize="md">
