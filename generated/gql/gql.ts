@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  fragment bookFields on Book {\n    id\n    title\n    subtitle\n    description\n    textSnippet\n    createdAt\n    cover\n    thumbnail\n    status\n    author {\n      name\n    }\n    owner {\n      id\n      username\n      phoneNumber\n      email\n    }\n    reservations {\n      createdAt\n      status\n      reserver {\n        username\n        email\n      }\n    }\n    loans {\n      returnDate\n      borrower {\n        username\n      }\n    }\n    tags {\n      name\n    }\n  }\n": types.BookFieldsFragmentDoc,
     "\n  mutation AddBook($newBookData: NewBookInput!) {\n    addBook(newBookData: $newBookData) {\n      ...bookFields\n    }\n  }\n": types.AddBookDocument,
+    "\n  mutation deleteBook($id: Float!) {\n\tdeleteBook(id: $id)\n  }\n": types.DeleteBookDocument,
     "\nmutation loginUser($email: String, $phoneNumber: String, $password: String!) {\n\tlogin(loginInput: { email: $email, phoneNumber: $phoneNumber, password: $password }) {\n\t  member {\n\t\tid\n\t\tusername\n\t\tphoneNumber\n\t\temail\n\t  }\n\t  error {\n\t\tmessage\n\t  }\n\t}\n  }\n": types.LoginUserDocument,
     "\n  mutation Logout {\n\tlogout\n  }\n": types.LogoutDocument,
     "\n  mutation Register($newMemberData: NewMemberInput!) {\n    register(newMemberData: $newMemberData) {\n      member {\n        username\n        phoneNumber\n        email\n        id\n      }\n      error {\n        message\n        field\n      }\n    }\n  }\n": types.RegisterDocument,
@@ -44,6 +45,10 @@ export function graphql(source: "\n  fragment bookFields on Book {\n    id\n    
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation AddBook($newBookData: NewBookInput!) {\n    addBook(newBookData: $newBookData) {\n      ...bookFields\n    }\n  }\n"): (typeof documents)["\n  mutation AddBook($newBookData: NewBookInput!) {\n    addBook(newBookData: $newBookData) {\n      ...bookFields\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation deleteBook($id: Float!) {\n\tdeleteBook(id: $id)\n  }\n"): (typeof documents)["\n  mutation deleteBook($id: Float!) {\n\tdeleteBook(id: $id)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
