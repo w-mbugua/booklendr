@@ -23,7 +23,7 @@ export default function BookPost({ book, width = 30 }: BookPostProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Box boxShadow="xl" w={`${width}%`} m={2} bgColor="white">
+      <Box boxShadow="xl" w={`${width}%`} m={2} bgColor="white" id="book-post">
         <Flex w="100%" justifyContent="space-between" padding={2}>
           <Tag size="md" variant="subtle" color="primaries.olive">
             <Avatar
