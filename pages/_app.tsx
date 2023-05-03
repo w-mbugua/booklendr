@@ -8,13 +8,23 @@ import {
   Open_Sans,
   Source_Sans_Pro,
 } from 'next/font/google';
+import { createUploadLink } from "apollo-upload-client";
 
-const merriweather = Open_Sans({ subsets: ['latin'], weight: ['300', '400'], style: ['normal', 'italic'] });
+const merriweather = Open_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400'],
+  style: ['normal', 'italic'],
+});
 
 const client = new ApolloClient({
-  uri: process.env.NEXT_PUBLIC_API_URL,
   cache: new InMemoryCache(),
-  credentials: 'include',
+  link: createUploadLink({
+    uri: process.env.NEXT_PUBLIC_API_URL,
+    credentials: 'include',
+    headers: {
+      'Apollo-Require-Preflight': 'true',
+    },
+  }),
 });
 
 const theme = extendTheme({
@@ -34,7 +44,7 @@ const theme = extendTheme({
       body: {
         p: {
           color: '#000',
-          fontSize: '16px'
+          fontSize: '16px',
         },
         h4: {
           color: '#000!important',

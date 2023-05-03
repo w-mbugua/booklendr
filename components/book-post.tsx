@@ -23,6 +23,8 @@ import {
   GetBooksDocument,
 } from '@/generated/gql/graphql';
 import ConfirmationAlert from './confirmationModal';
+import { AddIcon, DeleteIcon, EditIcon, ViewIcon } from '@chakra-ui/icons';
+import EditBook from './edit-book';
 
 interface BookPostProps extends BookCardProps {
   width?: number;
@@ -128,26 +130,31 @@ export default function BookPost({ book, width = 30 }: BookPostProps) {
           )}
           <Flex justifyContent="space-evenly">
             {user && user.currentUser.id === book.owner.id ? (
-              <Button
-                size="sm"
-                width="200px"
-                border="2px"
-                borderColor="primaries.olive"
-                color="primaries.olive"
-                my={2}
-                onClick={onOpenAlert}
-                isLoading={loading}
-              >
-                Delete
-              </Button>
+              <Flex>
+                <EditBook book={book} />
+                <Button
+                  size="sm"
+                  border="2px"
+                  borderColor="primaries.olive"
+                  color="primaries.olive"
+                  my={2}
+                  mx={2}
+                  onClick={onOpenAlert}
+                  isLoading={loading}
+                  leftIcon={<DeleteIcon />}
+                >
+                  Delete
+                </Button>
+              </Flex>
             ) : (
               <Button
                 size="sm"
-                width="200px"
                 border="2px"
+                width="130px"
                 borderColor="primaries.olive"
                 color="primaries.olive"
                 my={2}
+                leftIcon={<AddIcon />}
               >
                 Borrow
               </Button>
@@ -155,11 +162,11 @@ export default function BookPost({ book, width = 30 }: BookPostProps) {
 
             <Button
               size="sm"
-              width="200px"
               border="2px"
               color="primaries.olive"
               my={2}
               onClick={onOpen}
+              leftIcon={<ViewIcon />}
             >
               View More
             </Button>
