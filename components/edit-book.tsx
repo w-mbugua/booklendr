@@ -242,6 +242,7 @@ export default function EditBook({ book }: BookCardProps) {
               background="primaries.olive"
               color="primaries.white"
               mr={3}
+              isLoading={loading}
             >
               Submit
             </Button>

@@ -22,6 +22,7 @@ const documents = {
     "\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      ...bookFields\n    }\n  }\n": types.UpdateBookDocument,
     "\nquery CurrentUser {\n  currentUser {\n    id\n    email\n    phoneNumber\n    username\n    books {\n      title\n      tags {\n        name\n      }\n      status\n      author {\n        name\n      }\n      loans {\n        borrower {\n          username\n          phoneNumber\n          email\n        }\n        createdAt\n        returnDate\n        book {\n          title\n          id\n        }\n      }\n      reservations {\n        reserver {\n          username\n          phoneNumber\n          email\n        }\n        status\n        createdAt\n        updatedAt\n        book {\n          title\n          id\n        }\n      }\n    }\n  }\n}\n": types.CurrentUserDocument,
     "\n  query GetBooks {\n    getBooks {\n     ...bookFields\n    }\n  }\n": types.GetBooksDocument,
+    "\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n": types.Search_BooksDocument,
 };
 
 /**
@@ -74,6 +75,10 @@ export function graphql(source: "\nquery CurrentUser {\n  currentUser {\n    id\
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query GetBooks {\n    getBooks {\n     ...bookFields\n    }\n  }\n"): (typeof documents)["\n  query GetBooks {\n    getBooks {\n     ...bookFields\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n"): (typeof documents)["\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
