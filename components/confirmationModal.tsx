@@ -10,18 +10,22 @@ import {
 import { startCase } from 'lodash';
 import React from 'react';
 
-interface alertProps {
+export interface alertProps {
   isOpen: boolean;
   onOpen: () => void;
-  onClose: (status: boolean) => void;
-  action: string;
 }
+
+interface ConfirmationAlertProps extends alertProps {
+  action: string;
+  onClose: (status: boolean) => void;
+}
+
 export default function ConfirmationAlert({
   action,
   isOpen,
   onOpen,
   onClose,
-}: alertProps) {
+}: ConfirmationAlertProps) {
   const cancelRef = React.useRef(null);
 
   return (

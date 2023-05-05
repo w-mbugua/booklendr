@@ -81,6 +81,9 @@ const BookCard = ({ book }: BookCardProps) => {
                   borderColor="primaries.olive"
                   color="primaries.olive"
                   my={2}
+                  isDisabled={
+                    book.loans[0]?.borrower.id === data?.currentUser.id
+                  }
                 >
                   Borrow
                 </Button>
