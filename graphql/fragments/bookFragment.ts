@@ -24,13 +24,16 @@ const BOOK_FIELDS = graphql(`
       createdAt
       status
       reserver {
+        id
         username
         email
       }
     }
     loans {
+      status
       returnDate
       borrower {
+        id
         username
       }
     }

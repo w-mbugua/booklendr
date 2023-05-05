@@ -1,5 +1,5 @@
 import { Link } from '@chakra-ui/next-js';
-import { Box, Divider, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Divider, Stack, Text } from '@chakra-ui/react';
 import Logo from '../logo';
 import { Icon } from '@chakra-ui/react';
 import {
@@ -10,9 +10,23 @@ import {
 } from '@heroicons/react/24/solid';
 import useAuth from '@/hooks/useAuth';
 import { startCase } from 'lodash';
+import { useApolloClient, useMutation } from '@apollo/client';
+import { LogoutDocument } from '@/generated/gql/graphql';
+import { useRouter } from 'next/router';
 
 export default function Sidebar() {
   const { currentUser } = useAuth();
+  const [logout, { error, data }] = useMutation(LogoutDocument);
+  const apollo = useApolloClient();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    logout();
+    if (!error) {
+      apollo.resetStore();
+    }
+    router.push('/login');
+  };
   return (
     <Box
       height="100%"
@@ -70,16 +84,15 @@ export default function Sidebar() {
           <Icon as={BellAlertIcon} w={26} h={26} paddingRight={2} />
           Notifications
         </Link>
-        <Link
-          color="primaries.darkBlue"
-          href="/notifications"
-          padding={6}
+        <Button
+          variant="ghost"
+          leftIcon={<Icon as={ArrowLeftOnRectangleIcon} />}
+          onClick={handleLogout}
           display="flex"
-          alignItems="center"
+          justifyContent="start"
         >
-          <Icon as={ArrowLeftOnRectangleIcon} w={26} h={26} paddingRight={2} />
           Logout
-        </Link>
+        </Button>
       </Stack>
     </Box>
   );
