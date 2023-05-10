@@ -62,36 +62,36 @@ export default function Home() {
             <SearchBar />
           </Box>
           <br />
-          <Box
-            flexWrap="wrap"
-            bg="white"
-            boxShadow="lg"
-            borderRadius="20px"
-            padding={2}
-            minH="500px"
-            justifyContent="center"
-          >
-            <Text as="h3" textAlign="center">
-              Topic
-            </Text>
-            <Tag
-              size="sm"
-              variant="outline"
-              colorScheme="gray"
-              margin={1}
-              onClick={() => setSelectedTag('all')}
-              cursor="pointer"
-              _hover={{
-                background: 'primaries.lavender',
-                color: 'white',
-                transform: 'scale(1.3)',
-                mx: 2,
-              }}
+          {!!allTags.length && (
+            <Box
+              flexWrap="wrap"
+              bg="white"
+              boxShadow="lg"
+              borderRadius="20px"
+              padding={2}
+              minH="500px"
+              justifyContent="center"
             >
-              <TagLabel>All</TagLabel>
-            </Tag>
-            {allTags.length &&
-              allTags.map((tag) => (
+              <Text as="h3" textAlign="center">
+                Topic
+              </Text>
+              <Tag
+                size="sm"
+                variant="outline"
+                colorScheme="gray"
+                margin={1}
+                onClick={() => setSelectedTag('all')}
+                cursor="pointer"
+                _hover={{
+                  background: 'primaries.lavender',
+                  color: 'white',
+                  transform: 'scale(1.3)',
+                  mx: 2,
+                }}
+              >
+                <TagLabel>All</TagLabel>
+              </Tag>
+              {allTags.map((tag) => (
                 <Tag
                   size="sm"
                   key={tag}
@@ -110,7 +110,8 @@ export default function Home() {
                   <TagLabel>{tag}</TagLabel>
                 </Tag>
               ))}
-          </Box>
+            </Box>
+          )}
         </Box>
       </Flex>
     </Layout>

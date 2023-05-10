@@ -45,12 +45,18 @@ import EditBook from './edit-book';
 
 interface BookPostProps extends BookCardProps {
   width?: number;
+  secondaryContent?: boolean;
 }
-export default function BookPost({ book, width = 30 }: BookPostProps) {
+export default function BookPost({
+  book,
+  width = 30,
+  secondaryContent = true,
+}: BookPostProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const reservers = book.reservations.length
-    ? book.reservations.map((res) => res.reserver.id)
-    : [];
+  const reservers =
+    book?.reservations && book.reservations.length
+      ? book.reservations.map((res) => res.reserver.id)
+      : [];
   const {
     isOpen: isOpenAlert,
     onOpen: onOpenAlert,
@@ -61,6 +67,8 @@ export default function BookPost({ book, width = 30 }: BookPostProps) {
     onOpen: onOpenBorrowAlert,
     onClose: onCloseBorrowAlert,
   } = useDisclosure();
+
+  console.log({ book });
 
   const { data: user } = useQuery(CurrentUserDocument);
   const [error, setError] = useState('');
@@ -95,19 +103,20 @@ export default function BookPost({ book, width = 30 }: BookPostProps) {
   return (
     <>
       <Box boxShadow="xl" w={`${width}%`} m={2} bgColor="white" id="book-post">
-        <Flex w="100%" justifyContent="space-between" padding={2}>
-          <Tag size="md" variant="subtle" color="primaries.olive">
-            <Avatar
-              src=""
-              size="xs"
-              name={book.owner.username}
-              ml={-1}
-              mr={2}
-            />
-            <TagLabel>{book.owner.username}</TagLabel>
-          </Tag>
-          <Text fontSize="sm">{moment(book.createdAt).fromNow()}</Text>
-        </Flex>
+        {secondaryContent && (
+          <Flex w="100%" justifyContent="space-between" padding={2}>
+            <Tag size="md" variant="subtle" color="primaries.olive">
+              <Avatar src="" size="xs" ml={-1} mr={2} />
+              <TagLabel>
+                @
+                {user && user.currentUser.id === book.owner.id
+                  ? 'me'
+                  : book.owner.username}
+              </TagLabel>
+            </Tag>
+            <Text fontSize="sm">{moment(book.createdAt).fromNow()}</Text>
+          </Flex>
+        )}
         <Box
           w="100%"
           display="flex"
@@ -144,106 +153,105 @@ export default function BookPost({ book, width = 30 }: BookPostProps) {
               </Tag>
             ))}
           </Flex>
-          <Box>
-            {book.loans[0]?.borrower.id === user?.currentUser.id && (
-              <Flex>
-                <Text fontSize="sm" mr={2}>
-                  Borrow Request Status:{' '}
+          {secondaryContent && (
+            <>
+              <Box>
+                {book.loans[0]?.borrower.id === user?.currentUser.id && (
+                  <Flex>
+                    <Text fontSize="sm" mr={2}>
+                      Borrow Request Status:{' '}
+                    </Text>
+                    <Button
+                      size="sm"
+                      border="2px"
+                      width="130px"
+                      colorScheme="green"
+                      my={2}
+                      leftIcon={<InfoOutlineIcon />}
+                    >
+                      {book.loans[0]?.status}
+                    </Button>
+                  </Flex>
+                )}
+                {reservers.includes(Number(user?.currentUser.id)) && (
+                  <Flex>
+                    <Text>Reservation Status: </Text>
+                    <Tag
+                      size="sm"
+                      borderRadius="full"
+                      variant="solid"
+                      colorScheme="green"
+                      ml={2}
+                    >
+                      <TagLeftIcon boxSize="12px" as={InfoOutlineIcon} />
+                      <TagLabel>
+                        {/* find the user's reservation's status */}
+                        {
+                          book.reservations.find(
+                            (res) =>
+                              res.reserver.id === Number(user?.currentUser.id)
+                          )?.status
+                        }
+                      </TagLabel>
+                    </Tag>
+                  </Flex>
+                )}
+              </Box>
+              {error && (
+                <Text fontSize="sm" color="red" mb={2}>
+                  {error}
                 </Text>
-                <Button
-                  size="sm"
-                  border="2px"
-                  width="130px"
-                  colorScheme="green"
-                  my={2}
-                  leftIcon={<InfoOutlineIcon />}
-                >
-                  {book.loans[0]?.status}
-                </Button>
-              </Flex>
-            )}
-            {reservers.includes(Number(user?.currentUser.id)) && (
-              <Flex>
-                <Text>Reservation Status: </Text>
-                <Tag
-                  size="sm"
-                  borderRadius="full"
-                  variant="solid"
-                  colorScheme="green"
-                  ml={2}
-                >
-                  <TagLeftIcon boxSize="12px" as={InfoOutlineIcon} />
-                  <TagLabel>
-                    {/* find the user's reservation's status */}
-                    {
-                      book.reservations.find(
-                        (res) =>
-                          res.reserver.id === Number(user?.currentUser.id)
-                      )?.status
+              )}
+              <Flex justifyContent="space-evenly">
+                {user && user.currentUser.id === book.owner.id ? (
+                  <Flex>
+                    <EditBook book={book} />
+                    <Button
+                      size="sm"
+                      border="2px"
+                      borderColor="primaries.olive"
+                      color="primaries.olive"
+                      my={2}
+                      mx={2}
+                      onClick={onOpenAlert}
+                      isLoading={loading}
+                      leftIcon={<DeleteIcon />}
+                    >
+                      Delete
+                    </Button>
+                  </Flex>
+                ) : (
+                  <Button
+                    size="sm"
+                    border="2px"
+                    width="130px"
+                    borderColor="primaries.olive"
+                    color="primaries.olive"
+                    my={2}
+                    leftIcon={<AddIcon />}
+                    onClick={onOpenBorrowAlert}
+                    isDisabled={
+                      book.loans[0]?.borrower.id === user?.currentUser.id ||
+                      reservers.includes(Number(user?.currentUser.id))
                     }
-                  </TagLabel>
-                </Tag>
-              </Flex>
-            )}
-          </Box>
-          {/* text for owner */}
+                  >
+                    Borrow
+                  </Button>
+                )}
 
-          {/* flex for book tags */}
-
-          {/* flex for borrow, view more buttons === description, subtitle, author */}
-          {error && (
-            <Text fontSize="sm" color="red" mb={2}>
-              {error}
-            </Text>
-          )}
-          <Flex justifyContent="space-evenly">
-            {user && user.currentUser.id === book.owner.id ? (
-              <Flex>
-                <EditBook book={book} />
                 <Button
                   size="sm"
                   border="2px"
-                  borderColor="primaries.olive"
                   color="primaries.olive"
                   my={2}
-                  mx={2}
-                  onClick={onOpenAlert}
-                  isLoading={loading}
-                  leftIcon={<DeleteIcon />}
+                  onClick={onOpen}
+                  leftIcon={<ViewIcon />}
                 >
-                  Delete
+                  View More
                 </Button>
               </Flex>
-            ) : (
-              <Button
-                size="sm"
-                border="2px"
-                width="130px"
-                borderColor="primaries.olive"
-                color="primaries.olive"
-                my={2}
-                leftIcon={<AddIcon />}
-                onClick={onOpenBorrowAlert}
-                isDisabled={
-                  book.loans[0]?.borrower.id === user?.currentUser.id ||
-                  reservers.includes(Number(user?.currentUser.id))
-                }
-              >
-                Borrow
-              </Button>
-            )}
-
-            <Button
-              size="sm"
-              border="2px"
-              color="primaries.olive"
-              my={2}
-              onClick={onOpen}
-              leftIcon={<ViewIcon />}
-            >
-              View More
-            </Button>
-          </Flex>
+            </>
+          )}
         </Stack>
       </Box>
       <MainModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} size="2xl">
