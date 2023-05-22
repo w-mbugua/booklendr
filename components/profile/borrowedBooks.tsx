@@ -22,9 +22,26 @@ import {
   Box,
   Flex,
   CircularProgress,
+  Icon,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
 } from '@chakra-ui/react';
+import { MdOutlineMoreVert, MdOutlineCancel } from 'react-icons/md';
+import { IoCheckmarkDoneOutline } from 'react-icons/io5';
+import { IoMdChatbubbles } from 'react-icons/io';
+import { capitalize } from 'lodash';
 import moment from 'moment';
 import Image from 'next/image';
+import {
+  HamburgerIcon,
+  AddIcon,
+  ExternalLinkIcon,
+  RepeatIcon,
+  EditIcon,
+} from '@chakra-ui/icons';
 
 // export interface Headcells {
 //   label: string;
@@ -38,26 +55,73 @@ import Image from 'next/image';
 
 // if its borrowers,loop through the loans instead, each to have book details
 
+function BookMenu() {
+  return (
+    <Menu>
+      <MenuButton
+        as={IconButton}
+        aria-label="Options"
+        icon={<HamburgerIcon />}
+        variant="outline"
+      />
+      <MenuList>
+        <MenuItem icon={<IoCheckmarkDoneOutline />} command="⌘T">
+          Verify
+        </MenuItem>
+        <MenuItem icon={<MdOutlineCancel />} command="⌘N">
+          Reject
+        </MenuItem>
+        <MenuItem icon={<IoMdChatbubbles />} command="⌘⇧N">
+          Message
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  );
+}
+
 function Row({ loan }: { loan: Get_Loans_By_IdQuery['loansByLenderId'][0] }) {
   return (
     <Tr>
       <Td>{Number(loan.id) + 1}</Td>
       <Td>
-        <Image
-          src={loan.book.cover}
-          height={20}
-          width={20}
-          alt={loan.book.title}
-        />
-        <Text fontSize="sm">{loan.book.title}</Text>
+        <Flex gap="5px">
+          <Image
+            src={loan.book.cover}
+            height={20}
+            width={20}
+            alt={loan.book.title}
+          />
+          <Text fontSize="sm">{capitalize(loan.book.title)}</Text>
+        </Flex>
       </Td>
-      <Td>{moment(loan.createdAt).format('Do MMM YYYY')}</Td>
+      {/* <Td>{moment(loan.createdAt).format('Do MMM YYYY')}</Td> */}
       <Td>{moment(loan.returnDate).format('Do MMM YYYY')}</Td>
       <Td>{loan.status}</Td>
       <Td>{loan.borrower.username}</Td>
       <Td>{loan.borrower.email}</Td>
       <Td>{loan.borrower.phoneNumber}</Td>
       <Td>{loan.loanOverdue.toString()}</Td>
+      <Td>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label="Options"
+            icon={<MdOutlineMoreVert />}
+            variant="ghost"
+          />
+          <MenuList>
+            <MenuItem icon={<IoCheckmarkDoneOutline size='20px' />}>
+              Verify
+            </MenuItem>
+            <MenuItem icon={<MdOutlineCancel size='20px' />}>
+              Reject
+            </MenuItem>
+            <MenuItem icon={<IoMdChatbubbles size='20px' />}>
+              Message
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Td>
     </Tr>
   );
 }
@@ -71,10 +135,10 @@ const headCells = [
     label: 'Book',
     isNumeric: false,
   },
-  {
-    label: 'Loaned',
-    isNumeric: false,
-  },
+  // {
+  //   label: 'Loaned',
+  //   isNumeric: false,
+  // },
   {
     label: 'Due Date',
     isNumeric: false,
@@ -97,6 +161,10 @@ const headCells = [
   },
   {
     label: 'Overdue',
+    isNumeric: false,
+  },
+  {
+    label: 'Options',
     isNumeric: false,
   },
 ];
