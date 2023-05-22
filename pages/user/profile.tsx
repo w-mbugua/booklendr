@@ -9,6 +9,7 @@ import {
 import { useLazyQuery, useQuery } from '@apollo/client';
 import {
   Box,
+  Flex,
   Tab,
   TabList,
   TabPanel,
@@ -24,44 +25,50 @@ export default function UserProfile() {
 
   return (
     <Layout>
+      <Box>
       <Tabs>
-        <TabList>
-          <Tab>Profile</Tab>
-          <Tab>Borrowed</Tab>
-          <Tab>Reserved</Tab>
-        </TabList>
-
-        <TabPanels>
-          <TabPanel>
-            <Box display="flex" justifyContent="center">
-              <h1>BOOKS!!!!!</h1>
-              {data && (
-                <Box maxWidth="100%">
-                  {data.currentUser.books.length ? (
-                    <Box w="100%" display="flex" flexWrap="wrap">
-                      {data?.currentUser.books.map((book) => (
-                        <BookPost
-                          key={book.id}
-                          book={book}
-                          secondaryContent={false}
-                        />
-                      ))}
+        <Flex direction="column" gap="20px">
+          <Box bg="white" p={4}>
+            <TabList border="none">
+              <Tab>Profile</Tab>
+              <Tab>Borrowed</Tab>
+              <Tab>Reserved</Tab>
+            </TabList>
+          </Box>
+          <Box bg="white">
+            <TabPanels>
+              <TabPanel>
+                <Box display="flex" justifyContent="center">
+                  {data && (
+                    <Box maxWidth="100%">
+                      {data.currentUser.books.length ? (
+                        <Box w="100%" display="flex" flexWrap="wrap">
+                          {data?.currentUser.books.map((book) => (
+                            <BookPost
+                              key={book.id}
+                              book={book}
+                              secondaryContent={false}
+                            />
+                          ))}
+                        </Box>
+                      ) : (
+                        <Text>No books found.</Text>
+                      )}
                     </Box>
-                  ) : (
-                    <Text>No books found.</Text>
                   )}
                 </Box>
-              )}
-            </Box>
-          </TabPanel>
-          <TabPanel>
-            <BorroweredBooks />
-          </TabPanel>
-          <TabPanel>
-            <ReservedBooks />
-          </TabPanel>
-        </TabPanels>
+              </TabPanel>
+              <TabPanel>
+                <BorroweredBooks />
+              </TabPanel>
+              <TabPanel>
+                <ReservedBooks />
+              </TabPanel>
+            </TabPanels>
+          </Box>
+        </Flex>
       </Tabs>
+      </Box>
     </Layout>
   );
 }
