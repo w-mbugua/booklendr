@@ -10,19 +10,28 @@ import {
 } from '@chakra-ui/react';
 import { MutableRefObject } from 'react';
 
-interface ModalProps {
+export interface ModalProps {
   isOpen: boolean;
-  onOpen: () => void;
   onClose: () => void;
-  header?: string;
-  children: React.ReactNode;
+  header?: string | React.ReactNode;
+  children?: React.ReactNode;
   initialRef?: MutableRefObject<null>;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | 'full';
+  size?:
+    | 'xs'
+    | 'sm'
+    | 'md'
+    | 'lg'
+    | 'xl'
+    | '2xl'
+    | '3xl'
+    | '4xl'
+    | '5xl'
+    | '6xl'
+    | 'full';
 }
 
 export default function MainModal({
   isOpen,
-  onOpen,
   onClose,
   children,
   header,
