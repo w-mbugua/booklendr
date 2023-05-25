@@ -1,4 +1,5 @@
 import {
+  CreateConversationDocument,
   CurrentUserDocument,
   CurrentUserQuery,
   GetBooksQuery,
@@ -7,7 +8,7 @@ import {
   LoanFieldsFragment,
 } from '@/generated/gql/graphql';
 import { generateID } from '@/utils/generateID';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import {
   TableContainer,
   Table,
@@ -28,6 +29,8 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { MdOutlineMoreVert, MdOutlineCancel } from 'react-icons/md';
 import { IoCheckmarkDoneOutline } from 'react-icons/io5';
@@ -42,6 +45,7 @@ import {
   RepeatIcon,
   EditIcon,
 } from '@chakra-ui/icons';
+import DmModal from '../dm/dm-modal';
 
 // export interface Headcells {
 //   label: string;
@@ -80,6 +84,38 @@ function BookMenu() {
 }
 
 function Row({ loan }: { loan: Get_Loans_By_IdQuery['loansByLenderId'][0] }) {
+  const {
+    isOpen: isChatOpen,
+    onOpen: onOpenChat,
+    onClose: onCloseChat,
+  } = useDisclosure();
+
+  const [createConversation, { data, error, loading }] = useMutation(
+    CreateConversationDocument
+  );
+  const toast = useToast();
+  const onCreateConversation = async () => {
+    try {
+      await createConversation({
+        variables: {
+          createConversationData: {
+            participantIds: [loan.borrower.id],
+          },
+        },
+      });
+      onOpenChat();
+    } catch (err: any) {
+      console.log('error creating conversation');
+      toast({
+        position: 'top',
+        title: err?.message,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <Tr>
       <Td>{Number(loan.id) + 1}</Td>
@@ -110,17 +146,25 @@ function Row({ loan }: { loan: Get_Loans_By_IdQuery['loansByLenderId'][0] }) {
             variant="ghost"
           />
           <MenuList>
-            <MenuItem icon={<IoCheckmarkDoneOutline size='20px' />}>
+            <MenuItem icon={<IoCheckmarkDoneOutline size="20px" />}>
               Verify
             </MenuItem>
-            <MenuItem icon={<MdOutlineCancel size='20px' />}>
-              Reject
-            </MenuItem>
-            <MenuItem icon={<IoMdChatbubbles size='20px' />}>
+            <MenuItem icon={<MdOutlineCancel size="20px" />}>Reject</MenuItem>
+            <MenuItem
+              onClick={onCreateConversation}
+              icon={<IoMdChatbubbles size="20px" />}
+            >
               Message
             </MenuItem>
           </MenuList>
         </Menu>
+        {data?.createConversation.conversation && (
+          <DmModal
+            isOpen={isChatOpen}
+            onClose={onCloseChat}
+            conversationId={data.createConversation.conversation.id}
+          />
+        )}
       </Td>
     </Tr>
   );

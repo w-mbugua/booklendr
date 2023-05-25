@@ -254,7 +254,7 @@ export default function BookPost({
           )}
         </Stack>
       </Box>
-      <MainModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} size="2xl">
+      <MainModal isOpen={isOpen} onClose={onClose} size="2xl">
         <BookCard book={book} />
       </MainModal>
       <ConfirmationAlert
