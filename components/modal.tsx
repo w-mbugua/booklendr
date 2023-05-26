@@ -28,6 +28,7 @@ export interface ModalProps {
     | '5xl'
     | '6xl'
     | 'full';
+  isCentered?: boolean;
 }
 
 export default function MainModal({
@@ -37,6 +38,7 @@ export default function MainModal({
   header,
   initialRef,
   size = 'md',
+  isCentered = false,
 }: ModalProps) {
   return (
     <>
@@ -45,6 +47,7 @@ export default function MainModal({
         size={size}
         isOpen={isOpen}
         onClose={onClose}
+        isCentered
       >
         <ModalOverlay />
         <ModalContent>
