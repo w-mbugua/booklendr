@@ -46,6 +46,7 @@ import {
   EditIcon,
 } from '@chakra-ui/icons';
 import DmModal from '../dm/dm-modal';
+import BorrowerDetails from './borrower-details';
 
 // export interface Headcells {
 //   label: string;
@@ -88,6 +89,11 @@ function Row({ loan }: { loan: Get_Loans_By_IdQuery['loansByLenderId'][0] }) {
     isOpen: isChatOpen,
     onOpen: onOpenChat,
     onClose: onCloseChat,
+  } = useDisclosure();
+  const {
+    isOpen: isBorrowerOpen,
+    onOpen: onOpenBorrower,
+    onClose: onCloseBorrower,
   } = useDisclosure();
 
   const [createConversation, { data, error, loading }] = useMutation(
@@ -133,9 +139,11 @@ function Row({ loan }: { loan: Get_Loans_By_IdQuery['loansByLenderId'][0] }) {
       {/* <Td>{moment(loan.createdAt).format('Do MMM YYYY')}</Td> */}
       <Td>{moment(loan.returnDate).format('Do MMM YYYY')}</Td>
       <Td>{loan.status}</Td>
-      <Td>{loan.borrower.username}</Td>
-      <Td>{loan.borrower.email}</Td>
-      <Td>{loan.borrower.phoneNumber}</Td>
+      <Td>
+        <Text onClick={onOpenBorrower} color="blue" cursor="pointer">
+          {loan.borrower.username}
+        </Text>
+      </Td>
       <Td>{loan.loanOverdue.toString()}</Td>
       <Td>
         <Menu>
@@ -166,6 +174,11 @@ function Row({ loan }: { loan: Get_Loans_By_IdQuery['loansByLenderId'][0] }) {
           />
         )}
       </Td>
+      <BorrowerDetails
+        isOpen={isBorrowerOpen}
+        onClose={onCloseBorrower}
+        user={loan.borrower}
+      />
     </Tr>
   );
 }
@@ -193,14 +206,6 @@ const headCells = [
   },
   {
     label: 'Borrower',
-    isNumeric: false,
-  },
-  {
-    label: 'Borrower Email',
-    isNumeric: false,
-  },
-  {
-    label: 'Borrower Phone',
     isNumeric: false,
   },
   {
