@@ -84,7 +84,13 @@ function BookMenu() {
   );
 }
 
-function Row({ loan }: { loan: Get_Loans_By_IdQuery['loansByLenderId'][0] }) {
+function Row({
+  loan,
+  currentUser
+}: {
+  loan: Get_Loans_By_IdQuery['loansByLenderId'][0];
+  currentUser: CurrentUserQuery['currentUser'];
+}) {
   const {
     isOpen: isChatOpen,
     onOpen: onOpenChat,
@@ -171,6 +177,8 @@ function Row({ loan }: { loan: Get_Loans_By_IdQuery['loansByLenderId'][0] }) {
             isOpen={isChatOpen}
             onClose={onCloseChat}
             conversationId={data.createConversation.conversation.id}
+            to={loan.borrower.username}
+            sender={currentUser}
           />
         )}
       </Td>
@@ -251,9 +259,13 @@ export default function BorroweredBooks() {
               </Tr>
             </Thead>
             <Tbody>
-              {loans && loans?.loansByLenderId.length ? (
+              {loans && data?.currentUser && loans?.loansByLenderId.length ? (
                 loans?.loansByLenderId.map((loan) => (
-                  <Row key={loan.id} loan={loan} />
+                  <Row
+                    key={loan.id}
+                    loan={loan}
+                    currentUser={data.currentUser}
+                  />
                 ))
               ) : (
                 <Text fontSize="xl">No borrowed books</Text>
