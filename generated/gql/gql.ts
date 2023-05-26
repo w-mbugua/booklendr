@@ -26,12 +26,14 @@ const documents = {
     "\n  mutation Logout {\n\tlogout\n  }\n": types.LogoutDocument,
     "\n  mutation Register($newMemberData: NewMemberInput!) {\n    register(newMemberData: $newMemberData) {\n      member {\n        username\n        phoneNumber\n        email\n        id\n      }\n      error {\n        message\n        field\n      }\n    }\n  }\n": types.RegisterDocument,
     "\n  mutation RESERVE_BOOK($reserveId: Float!) {\n    reserve(id: $reserveId) {\n      message\n      book {\n        loans {\n          borrower {\n            username\n          }\n        }\n        reservations {\n          reserver {\n            username\n          }\n          status\n        }\n      }\n    }\n  }\n": types.Reserve_BookDocument,
+    "\n  mutation sendMessage($messageData: MessageInput!) {\n    sendMessage(messageData: $messageData) {\n      id\n    }\n  }\n": types.SendMessageDocument,
     "\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      ...bookFields\n    }\n  }\n": types.UpdateBookDocument,
     "\nquery CurrentUser {\n  currentUser {\n    id\n    email\n    phoneNumber\n    username\n    books {\n      ...bookFields\n      \n      }\n    }\n  }\n": types.CurrentUserDocument,
     "\n  query GetBookById($BookId: Float!) {\n    getBookById(id: $BookId) {\n      ...bookFields\n    }\n  }\n": types.GetBookByIdDocument,
     "\n  query GetBooks {\n    getBooks {\n     ...bookFields\n    }\n  }\n": types.GetBooksDocument,
     "\n  query GET_LOANS {\n    loans {\n      book {\n        ...basicBookFields\n      }\n      ...loanFields\n    }\n  }\n": types.Get_LoansDocument,
     "\n  query GET_LOANS_BY_ID($lenderId: Float!) {\n    loansByLenderId(lenderId: $lenderId) {\n      book {\n        ...basicBookFields\n      }\n      ...loanFields\n    }\n  }\n": types.Get_Loans_By_IdDocument,
+    "\n  query Messages($conversationId: Float!) {\n    messages(conversationId: $conversationId) {\n      id\n\t  createdAt\n      conversation {\n        id\n      }\n      body\n      sender {\n        username\n        id\n      }\n    }\n  }\n": types.MessagesDocument,
     "\n  query GET_LENDER_RESERVATIONS($lenderId: Float!) {\n    reservationsByLenderId(lenderId: $lenderId) {\n      ...reservationFields\n    }\n  }\n": types.Get_Lender_ReservationsDocument,
     "\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n": types.Search_BooksDocument,
 };
@@ -105,6 +107,10 @@ export function graphql(source: "\n  mutation RESERVE_BOOK($reserveId: Float!) {
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  mutation sendMessage($messageData: MessageInput!) {\n    sendMessage(messageData: $messageData) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation sendMessage($messageData: MessageInput!) {\n    sendMessage(messageData: $messageData) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      ...bookFields\n    }\n  }\n"): (typeof documents)["\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      ...bookFields\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -126,6 +132,10 @@ export function graphql(source: "\n  query GET_LOANS {\n    loans {\n      book 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query GET_LOANS_BY_ID($lenderId: Float!) {\n    loansByLenderId(lenderId: $lenderId) {\n      book {\n        ...basicBookFields\n      }\n      ...loanFields\n    }\n  }\n"): (typeof documents)["\n  query GET_LOANS_BY_ID($lenderId: Float!) {\n    loansByLenderId(lenderId: $lenderId) {\n      book {\n        ...basicBookFields\n      }\n      ...loanFields\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Messages($conversationId: Float!) {\n    messages(conversationId: $conversationId) {\n      id\n\t  createdAt\n      conversation {\n        id\n      }\n      body\n      sender {\n        username\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  query Messages($conversationId: Float!) {\n    messages(conversationId: $conversationId) {\n      id\n\t  createdAt\n      conversation {\n        id\n      }\n      body\n      sender {\n        username\n        id\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
