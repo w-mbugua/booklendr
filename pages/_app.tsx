@@ -1,6 +1,16 @@
 import '@/styles/globals.css';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {
+  ChakraProvider,
+  extendTheme,
+  type ThemeConfig,
+} from '@chakra-ui/react';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  split,
+} from '@apollo/client';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import type { AppProps } from 'next/app';
 import {
   Merriweather,
@@ -8,7 +18,9 @@ import {
   Open_Sans,
   Source_Sans_Pro,
 } from 'next/font/google';
-import { createUploadLink } from "apollo-upload-client";
+import { createUploadLink } from 'apollo-upload-client';
+import { createClient } from 'graphql-ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 const merriweather = Open_Sans({
   subsets: ['latin'],
@@ -16,18 +28,38 @@ const merriweather = Open_Sans({
   style: ['normal', 'italic'],
 });
 
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: createUploadLink({
-    uri: process.env.NEXT_PUBLIC_API_URL,
-    credentials: 'include',
-    headers: {
-      'Apollo-Require-Preflight': 'true',
-    },
-  }),
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: process.env.NEXT_PUBLIC_API_URL as string,
+  })
+);
+
+const httpLink = createUploadLink({
+  uri: process.env.NEXT_PUBLIC_API_URL,
+  credentials: 'include',
+  headers: {
+    'Apollo-Require-Preflight': 'true',
+  },
 });
 
-const theme = extendTheme({
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink
+);
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: splitLink,
+});
+
+export const theme = extendTheme({
+  initialColorMode: 'dark',
   colors: {
     primaries: {
       lightBlue: '#E8ECEB',
