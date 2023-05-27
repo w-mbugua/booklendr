@@ -28,11 +28,17 @@ const merriweather = Open_Sans({
   style: ['normal', 'italic'],
 });
 
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: process.env.NEXT_PUBLIC_API_URL as string,
-  })
-);
+const wsLink =
+  typeof window !== 'undefined'
+    ? new GraphQLWsLink(
+        createClient({
+          url: process.env.NEXT_PUBLIC_WS_URL as string,
+          connectionParams: {
+            credentials: 'include'
+          }
+        })
+      )
+    : null;
 
 const httpLink = createUploadLink({
   uri: process.env.NEXT_PUBLIC_API_URL,
@@ -42,17 +48,21 @@ const httpLink = createUploadLink({
   },
 });
 
-const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
-    );
-  },
-  wsLink,
-  httpLink
-);
+const splitLink =
+  typeof window !== 'undefined' && wsLink !== null
+    ? split(
+        ({ query }) => {
+          const definition = getMainDefinition(query);
+          return (
+            definition.kind === 'OperationDefinition' &&
+            definition.operation === 'subscription'
+          );
+        },
+        wsLink,
+        httpLink
+      )
+    : httpLink;
+
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: splitLink,
