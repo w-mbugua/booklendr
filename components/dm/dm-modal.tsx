@@ -59,7 +59,7 @@ export default function DmModal({
         </Box>
       }
     >
-      <Flex direction="column" minHeight="400px">
+      <Flex direction="column" minHeight="400px" maxHeight="500px" overflow="hidden">
         {/* display messages */}
         <Flex direction="column" overflow="hidden" flexGrow={1}>
         <MessageList user={sender} conversationId={conversationId} />

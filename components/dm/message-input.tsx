@@ -20,8 +20,7 @@ export default function MessageInput({
   const [sendMessage, { data, error, loading }] =
     useMutation(SendMessageDocument);
 
-  console.log({ conversationId });
-  const onSendMessage = async (event: React.FormEvent) => {
+    const onSendMessage = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       await sendMessage({
