@@ -1,7 +1,12 @@
-import { CurrentUserQuery, MessagesDocument } from '@/generated/gql/graphql';
+import {
+  CurrentUserQuery,
+  MessageSentDocument,
+  MessagesDocument,
+} from '@/generated/gql/graphql';
 import { useQuery } from '@apollo/client';
 import { Alert, AlertIcon, CircularProgress, Flex } from '@chakra-ui/react';
 import MessageItem from './message-item';
+import { useEffect } from 'react';
 
 export default function MessageList({
   conversationId,
@@ -10,9 +15,27 @@ export default function MessageList({
   conversationId: number;
   user: CurrentUserQuery['currentUser'];
 }) {
-  const { data, error, loading } = useQuery(MessagesDocument, {
+  const { data, error, loading, subscribeToMore } = useQuery(MessagesDocument, {
     variables: { conversationId },
   });
+
+  const subscribeToMoreMessages = () =>
+    subscribeToMore({
+      document: MessageSentDocument,
+      variables: { conversationId },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData) return prev;
+        const newItem = subscriptionData.data.messageSent;
+        return Object.assign({}, prev, {
+          messages: [newItem, ...prev.messages],
+        });
+      },
+    });
+
+  useEffect(() => {
+    subscribeToMoreMessages();
+  }, []);
+
   if (loading) return <CircularProgress isIndeterminate color="green.300" />;
   if (error)
     return (
@@ -22,7 +45,7 @@ export default function MessageList({
       </Alert>
     );
   return (
-    <Flex direction="column">
+    <Flex direction="column" overflow="hidden">
       {data?.messages.map((msg) => (
         <MessageItem
           key={msg.id}

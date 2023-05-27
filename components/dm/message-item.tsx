@@ -14,7 +14,7 @@ function MessageItem({ message, sentByMe }: MessageItemProps) {
       direction="row"
       p={4}
       spacing={4}
-      _hover={{ bg: 'whiteAlpha.200' }}
+      _hover={{ bg: 'blackAlpha.200' }}
       wordBreak="break-word"
     >
       {!sentByMe && (
@@ -33,13 +33,13 @@ function MessageItem({ message, sentByMe }: MessageItemProps) {
               {message.sender.username}
             </Text>
           )}
-          <Text fontSize={14} color="whiteAlpha.700">
+          <Text fontSize={14} color="blackAlpha.700">
             {moment(message.createdAt).fromNow()}
           </Text>
         </Stack>
         <Flex justify={sentByMe ? 'flex-end' : 'flex-start'}>
           <Box
-            bg={sentByMe ? 'brand.100' : 'whiteAlpha.300'}
+            bg={sentByMe ? 'primaries.lavender' : 'primaries.lightBlue'}
             px={2}
             py={1}
             borderRadius={12}
