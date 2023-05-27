@@ -36,6 +36,7 @@ const documents = {
     "\n  query Messages($conversationId: Float!) {\n    messages(conversationId: $conversationId) {\n      id\n\t  createdAt\n      conversation {\n        id\n      }\n      body\n      sender {\n        username\n        id\n      }\n    }\n  }\n": types.MessagesDocument,
     "\n  query GET_LENDER_RESERVATIONS($lenderId: Float!) {\n    reservationsByLenderId(lenderId: $lenderId) {\n      ...reservationFields\n    }\n  }\n": types.Get_Lender_ReservationsDocument,
     "\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n": types.Search_BooksDocument,
+    "\n  subscription messageSent($conversationId: Float!) {\n    messageSent(conversationId: $conversationId) {\n      id\n      createdAt\n      conversation {\n        id\n      }\n      body\n    }\n  }\n": types.MessageSentDocument,
 };
 
 /**
@@ -144,6 +145,10 @@ export function graphql(source: "\n  query GET_LENDER_RESERVATIONS($lenderId: Fl
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n"): (typeof documents)["\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  subscription messageSent($conversationId: Float!) {\n    messageSent(conversationId: $conversationId) {\n      id\n      createdAt\n      conversation {\n        id\n      }\n      body\n    }\n  }\n"): (typeof documents)["\n  subscription messageSent($conversationId: Float!) {\n    messageSent(conversationId: $conversationId) {\n      id\n      createdAt\n      conversation {\n        id\n      }\n      body\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
