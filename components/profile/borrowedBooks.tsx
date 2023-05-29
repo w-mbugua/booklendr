@@ -2,49 +2,41 @@ import {
   CreateConversationDocument,
   CurrentUserDocument,
   CurrentUserQuery,
-  GetBooksQuery,
   Get_Loans_By_IdDocument,
-  Get_Loans_By_IdQuery,
-  LoanFieldsFragment,
+  Get_Loans_By_IdQuery
 } from '@/generated/gql/graphql';
 import { generateID } from '@/utils/generateID';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
-  TableContainer,
-  Table,
-  TableCaption,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  Tfoot,
-  Text,
+  HamburgerIcon
+} from '@chakra-ui/icons';
+import {
   Box,
-  Flex,
   CircularProgress,
-  Icon,
+  Flex,
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
   useDisclosure,
-  useToast,
+  useToast
 } from '@chakra-ui/react';
-import { MdOutlineMoreVert, MdOutlineCancel } from 'react-icons/md';
-import { IoCheckmarkDoneOutline } from 'react-icons/io5';
-import { IoMdChatbubbles } from 'react-icons/io';
 import { capitalize } from 'lodash';
 import moment from 'moment';
 import Image from 'next/image';
-import {
-  HamburgerIcon,
-  AddIcon,
-  ExternalLinkIcon,
-  RepeatIcon,
-  EditIcon,
-} from '@chakra-ui/icons';
+import { IoMdChatbubbles } from 'react-icons/io';
+import { IoCheckmarkDoneOutline } from 'react-icons/io5';
+import { MdOutlineCancel, MdOutlineMoreVert } from 'react-icons/md';
 import DmModal from '../dm/dm-modal';
 import BorrowerDetails from './borrower-details';
 
@@ -57,8 +49,6 @@ import BorrowerDetails from './borrower-details';
 //   headCells: Headcells[];
 //   book: GetBooksQuery['getBooks'][0];
 // }
-
-// if its borrowers,loop through the loans instead, each to have book details
 
 function BookMenu() {
   return (
@@ -235,8 +225,6 @@ export default function BorroweredBooks() {
   } = useQuery(Get_Loans_By_IdDocument, {
     variables: { lenderId: Number(data?.currentUser.id) },
   });
-
-  console.log({ loans });
 
   return (
     <Box>

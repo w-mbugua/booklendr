@@ -68,8 +68,6 @@ export default function BookPost({
     onClose: onCloseBorrowAlert,
   } = useDisclosure();
 
-  console.log({ book });
-
   const { data: user } = useQuery(CurrentUserDocument);
   const [error, setError] = useState('');
   const [deleteBook, { data, loading }] = useMutation(DeleteBookDocument, {

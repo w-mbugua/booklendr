@@ -91,7 +91,6 @@ export default function NewBook() {
       <MainModal
         initialRef={initialRef}
         isOpen={isOpen}
-        onOpen={onOpen}
         onClose={onClose}
         header="Add a New Book"
       >

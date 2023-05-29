@@ -26,9 +26,7 @@ function Login() {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
-  const [login, { data, error, loading }] = useMutation(LoginUserDocument);
-  const { currentUser, isLoggedIn } = useAuth();
-  
+  const [login, { data, error, loading }] = useMutation(LoginUserDocument);  
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().test((username) => {
