@@ -22,7 +22,6 @@ export default function SearchBar() {
     }
   );
   const items: SearchBook = data?.searchBook || [];
-  console.log({ inputValue });
 
   //debounce func
   const findBooks = debounce(searchBooks, 2000);

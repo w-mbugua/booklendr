@@ -7,7 +7,6 @@ import { useSearchParams } from 'next/navigation';
 
 export default function BookPage() {
   const searchParams = useSearchParams();
-  console.log({ searchParams });
 
   const id = searchParams.get('id');
 
