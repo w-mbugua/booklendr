@@ -1,19 +1,16 @@
+import { CurrentUserQuery, SendMessageDocument } from '@/generated/gql/graphql';
+import { useMutation } from '@apollo/client';
 import {
   Box,
-  Button,
   Divider,
   Flex,
-  Input,
-  Text,
-  useDisclosure,
+  Text
 } from '@chakra-ui/react';
-import MainModal, { ModalProps } from '../modal';
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { CurrentUserQuery, SendMessageDocument } from '@/generated/gql/graphql';
 import { toast } from 'react-hot-toast';
-import MessageList from './messagesList';
+import MainModal, { ModalProps } from '../modal';
 import MessageInput from './message-input';
+import MessageList from './messagesList';
 
 interface DmModalProps extends ModalProps {
   conversationId: number;

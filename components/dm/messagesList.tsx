@@ -27,7 +27,8 @@ export default function MessageList({
         if (!subscriptionData) return prev;
         const newItem = subscriptionData.data.messageSent;
         return Object.assign({}, prev, {
-          messages: [newItem, ...prev.messages],
+          messages:
+            newItem.sender.id === user.id ? prev.messages : [newItem, ...prev.messages],
         });
       },
     });
@@ -46,13 +47,17 @@ export default function MessageList({
     );
   return (
     <Flex direction="column" overflow="hidden">
-      {data?.messages.map((msg) => (
-        <MessageItem
-          key={msg.id}
-          message={msg}
-          sentByMe={msg.sender.id === user.id}
-        />
-      ))}
+      {data?.messages && (
+        <Flex direction="column-reverse" overflowY="scroll" height="100%">
+          {data.messages.map((msg) => (
+            <MessageItem
+              key={msg.id}
+              message={msg}
+              sentByMe={msg.sender.id === user.id}
+            />
+          ))}
+        </Flex>
+      )}
     </Flex>
   );
 }

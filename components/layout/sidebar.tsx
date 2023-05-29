@@ -13,6 +13,7 @@ import { startCase } from 'lodash';
 import { useApolloClient, useMutation } from '@apollo/client';
 import { LogoutDocument } from '@/generated/gql/graphql';
 import { useRouter } from 'next/router';
+import NotificationBadge from '../notifications';
 
 export default function Sidebar() {
   const { currentUser } = useAuth();
@@ -43,7 +44,7 @@ export default function Sidebar() {
           <Text
             fontSize="lg"
             as={Link}
-            href="/"
+            href="/home"
             color="primaries.olive"
             fontWeight="bold"
           >
@@ -55,7 +56,7 @@ export default function Sidebar() {
       <Stack padding={2} display="flex" height="40%">
         <Link
           color="primaries.darkBlue"
-          href="/"
+          href="/home"
           padding={6}
           display="flex"
           alignItems="center"
@@ -82,7 +83,12 @@ export default function Sidebar() {
           alignItems="center"
         >
           <Icon as={BellAlertIcon} w={26} h={26} paddingRight={2} />
-          Notifications
+          <Box ml="3">
+            <Text fontWeight="bold">
+              Notifications
+              {currentUser && <NotificationBadge currentUser={currentUser} />}
+            </Text>
+          </Box>
         </Link>
         <Button
           variant="ghost"
