@@ -6,5 +6,6 @@ const USER_FIELDS = graphql(`
     email
     phoneNumber
     username
+    unreadMessages
   }
 `);
