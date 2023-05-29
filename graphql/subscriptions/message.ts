@@ -4,11 +4,15 @@ const MESSAGE_SENT = graphql(`
   subscription messageSent($conversationId: Float!) {
     messageSent(conversationId: $conversationId) {
       id
+	  body
       createdAt
       conversation {
         id
       }
-      body
+	  sender {
+		id
+		username
+	  }
     }
   }
 `);
