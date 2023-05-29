@@ -1,12 +1,14 @@
-import { CurrentUserQuery, SendMessageDocument } from '@/generated/gql/graphql';
-import { useMutation } from '@apollo/client';
 import {
-	Input,
-	Text
-} from '@chakra-ui/react';
+  CurrentUserQuery,
+  MessagesDocument,
+  MessagesQuery,
+  SendMessageDocument,
+} from '@/generated/gql/graphql';
+import { useMutation } from '@apollo/client';
+import { Input, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
-
+import { v4 } from 'uuid';
 interface MessageInputProps {
   conversationId: number;
   sender: CurrentUserQuery['currentUser'];
@@ -17,19 +19,51 @@ export default function MessageInput({
   sender,
 }: MessageInputProps) {
   const [message, setMessage] = useState('');
-  const [sendMessage, { data, error, loading }] =
-    useMutation(SendMessageDocument);
+  const [sendMessage, { error, loading }] = useMutation(SendMessageDocument);
 
-    const onSendMessage = async (event: React.FormEvent) => {
+  const onSendMessage = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       await sendMessage({
         variables: {
           messageData: { body: message, sender: sender.id, conversationId },
         },
+        optimisticResponse: {
+          sendMessage: {
+            __typename: 'Message',
+            body: message,
+          },
+        },
+        update: (cache) => {
+          const existing = cache.readQuery({
+            query: MessagesDocument,
+            variables: { conversationId },
+          }) as MessagesQuery;
+
+          cache.writeQuery({
+            query: MessagesDocument,
+            variables: { conversationId },
+            data: {
+              ...existing, // all other keys,
+              messages: [
+                {
+                  body: message,
+                  id: v4(), // temporary id for the cache
+                  conversation: conversationId,
+                  sender,
+                  createdAt: new Date(Date.now()),
+                  updatedAt: new Date(Date.now()),
+                },
+                ...existing.messages,
+              ],
+            },
+          });
+        },
       });
     } catch (err: any) {
       toast.error('Failed to send message ', err.message);
+    } finally {
+      setMessage('');
     }
   };
 
@@ -42,6 +76,7 @@ export default function MessageInput({
         placeholder="New message..."
         id="message"
         size="lg"
+        value={message}
         onChange={({ target }) => setMessage(target.value)}
       />
     </form>
