@@ -18,21 +18,20 @@ import {
 import useAuth from '@/hooks/useAuth';
 import { startCase } from 'lodash';
 import { useApolloClient, useMutation } from '@apollo/client';
-import { LogoutDocument } from '@/generated/gql/graphql';
+import {
+  LogoutDocument,
+  ReadNotificationsDocument,
+} from '@/generated/gql/graphql';
 import { useRouter } from 'next/router';
 import NotificationBadge from '../notifications';
 import MessageNotifications from '../notifications/message-notifications';
+import { toast } from 'react-hot-toast';
 
 export default function Sidebar() {
   const { currentUser } = useAuth();
   const [logout, { error, data }] = useMutation(LogoutDocument);
   const apollo = useApolloClient();
   const router = useRouter();
-  const {
-    isOpen: isOpenNotifications,
-    onOpen: onOpenNotifications,
-    onClose: onCloseNotifictions,
-  } = useDisclosure();
 
   const handleLogout = async () => {
     logout();
@@ -41,9 +40,6 @@ export default function Sidebar() {
     }
     router.push('/login');
   };
-  console.log('WTF??!?!?!?!??!!!!!!!!!!!!!!!');
-  
-  console.log({ onOpenNotifications });
 
   return (
     <Box
@@ -92,16 +88,8 @@ export default function Sidebar() {
           <Icon as={BookOpenIcon} w={26} h={26} paddingRight={2} />
           Profile
         </Link>
-        <Button
-          variant="ghost"
-          leftIcon={<Icon as={BellAlertIcon} />}
-          onClick={onOpenNotifications}
-          display="flex"
-          justifyContent="start"
-        >
-          Messages
-          {currentUser && <NotificationBadge />}
-        </Button>
+
+        <NotificationBadge />
         <Button
           variant="ghost"
           leftIcon={<Icon as={ArrowLeftOnRectangleIcon} />}
@@ -112,10 +100,6 @@ export default function Sidebar() {
           Logout
         </Button>
       </Stack>
-      <MessageNotifications
-        onClose={onCloseNotifictions}
-        isOpen={isOpenNotifications}
-      />
     </Box>
   );
 }
