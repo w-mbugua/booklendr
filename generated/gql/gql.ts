@@ -24,6 +24,7 @@ const documents = {
     "\n  mutation deleteBook($id: Float!) {\n\tdeleteBook(id: $id)\n  }\n": types.DeleteBookDocument,
     "\nmutation loginUser($email: String, $phoneNumber: String, $password: String!) {\n\tlogin(loginInput: { email: $email, phoneNumber: $phoneNumber, password: $password }) {\n\t  member {\n\t\tid\n\t\tusername\n\t\tphoneNumber\n\t\temail\n\t  }\n\t  error {\n\t\tmessage\n\t  }\n\t}\n  }\n": types.LoginUserDocument,
     "\n  mutation Logout {\n\tlogout\n  }\n": types.LogoutDocument,
+    "\n  mutation readNotifications {\n    markNotificationsAsRead {\n      ...userFields\n    }\n  }\n": types.ReadNotificationsDocument,
     "\n  mutation Register($newMemberData: NewMemberInput!) {\n    register(newMemberData: $newMemberData) {\n      member {\n        username\n        phoneNumber\n        email\n        id\n      }\n      error {\n        message\n        field\n      }\n    }\n  }\n": types.RegisterDocument,
     "\n  mutation RESERVE_BOOK($reserveId: Float!) {\n    reserve(id: $reserveId) {\n      message\n      book {\n        loans {\n          borrower {\n            username\n          }\n        }\n        reservations {\n          reserver {\n            username\n          }\n          status\n        }\n      }\n    }\n  }\n": types.Reserve_BookDocument,
     "\n  mutation sendMessage($messageData: MessageInput!) {\n    sendMessage(messageData: $messageData) {\n      body\n    }\n  }\n": types.SendMessageDocument,
@@ -100,6 +101,10 @@ export function graphql(source: "\nmutation loginUser($email: String, $phoneNumb
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation Logout {\n\tlogout\n  }\n"): (typeof documents)["\n  mutation Logout {\n\tlogout\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation readNotifications {\n    markNotificationsAsRead {\n      ...userFields\n    }\n  }\n"): (typeof documents)["\n  mutation readNotifications {\n    markNotificationsAsRead {\n      ...userFields\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

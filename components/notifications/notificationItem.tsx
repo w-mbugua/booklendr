@@ -34,7 +34,7 @@ export default function NotificationItem({
       //   conversation.id === selectedNotificationId ? 'whiteAlpha.200' : 'none'
       // }
       _hover={{ bg: 'whiteAlpha.200' }}
-      onClick={handleClick}
+      onClick={onClick}
       onContextMenu={handleClick}
       position="relative"
     >
