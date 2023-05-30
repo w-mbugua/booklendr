@@ -1,5 +1,12 @@
 import { Link } from '@chakra-ui/next-js';
-import { Box, Button, Divider, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Divider,
+  Stack,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import Logo from '../logo';
 import { Icon } from '@chakra-ui/react';
 import {
@@ -14,12 +21,18 @@ import { useApolloClient, useMutation } from '@apollo/client';
 import { LogoutDocument } from '@/generated/gql/graphql';
 import { useRouter } from 'next/router';
 import NotificationBadge from '../notifications';
+import MessageNotifications from '../notifications/message-notifications';
 
 export default function Sidebar() {
   const { currentUser } = useAuth();
   const [logout, { error, data }] = useMutation(LogoutDocument);
   const apollo = useApolloClient();
   const router = useRouter();
+  const {
+    isOpen: isOpenNotifications,
+    onOpen: onOpenNotifications,
+    onClose: onCloseNotifictions,
+  } = useDisclosure();
 
   const handleLogout = async () => {
     logout();
@@ -28,6 +41,10 @@ export default function Sidebar() {
     }
     router.push('/login');
   };
+  console.log('WTF??!?!?!?!??!!!!!!!!!!!!!!!');
+  
+  console.log({ onOpenNotifications });
+
   return (
     <Box
       height="100%"
@@ -75,21 +92,16 @@ export default function Sidebar() {
           <Icon as={BookOpenIcon} w={26} h={26} paddingRight={2} />
           Profile
         </Link>
-        <Link
-          color="primaries.darkBlue"
-          href="/notifications"
-          padding={6}
+        <Button
+          variant="ghost"
+          leftIcon={<Icon as={BellAlertIcon} />}
+          onClick={onOpenNotifications}
           display="flex"
-          alignItems="center"
+          justifyContent="start"
         >
-          <Icon as={BellAlertIcon} w={26} h={26} paddingRight={2} />
-          <Box ml="3">
-            <Text fontWeight="bold">
-              Notifications
-              {currentUser && <NotificationBadge currentUser={currentUser} />}
-            </Text>
-          </Box>
-        </Link>
+          Messages
+          {currentUser && <NotificationBadge />}
+        </Button>
         <Button
           variant="ghost"
           leftIcon={<Icon as={ArrowLeftOnRectangleIcon} />}
@@ -100,6 +112,10 @@ export default function Sidebar() {
           Logout
         </Button>
       </Stack>
+      <MessageNotifications
+        onClose={onCloseNotifictions}
+        isOpen={isOpenNotifications}
+      />
     </Box>
   );
 }

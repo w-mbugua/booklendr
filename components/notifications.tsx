@@ -29,12 +29,9 @@ export default function NotificationBadge() {
     subscribeToNotifications();
   }, []);
 
-  if (error) return null;
   return (
-    !loading && (
-      <Badge ml="1" colorScheme="green">
-        {data?.currentUser.unreadMessages}
-      </Badge>
-    )
+    <Badge ml="1" colorScheme="green">
+      {data?.currentUser.unreadMessages}
+    </Badge>
   );
 }
