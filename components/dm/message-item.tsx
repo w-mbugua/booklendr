@@ -9,6 +9,7 @@ interface MessageItemProps {
 }
 
 function MessageItem({ message, sentByMe }: MessageItemProps) {
+
   return (
     <Stack
       direction="row"

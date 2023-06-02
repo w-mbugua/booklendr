@@ -32,6 +32,7 @@ export default function MessageInput({
           sendMessage: {
             __typename: 'Message',
             body: message,
+            id: Math.random() * 10001
           },
         },
         update: (cache) => {
@@ -39,21 +40,21 @@ export default function MessageInput({
             query: MessagesDocument,
             variables: { conversationId },
           }) as MessagesQuery;
-
+          const newMessage = {
+            body: message,
+            id: v4(), // temporary id for the cache
+            conversation: conversationId,
+            sender,
+            createdAt: new Date(Date.now()),
+            updatedAt: new Date(Date.now()),
+          }
           cache.writeQuery({
             query: MessagesDocument,
             variables: { conversationId },
             data: {
               ...existing, // all other keys,
               messages: [
-                {
-                  body: message,
-                  id: v4(), // temporary id for the cache
-                  conversation: conversationId,
-                  sender,
-                  createdAt: new Date(Date.now()),
-                  updatedAt: new Date(Date.now()),
-                },
+                newMessage,
                 ...existing.messages,
               ],
             },
