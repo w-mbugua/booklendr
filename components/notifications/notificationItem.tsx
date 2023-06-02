@@ -1,26 +1,65 @@
-import { ConversationsQuery } from '@/generated/gql/graphql';
-import { Avatar, AvatarBadge, Box, Flex, Stack, Text } from '@chakra-ui/react';
+import {
+  ConversationsQuery,
+  CurrentUserDocument,
+  ReadConversationDocument,
+} from '@/generated/gql/graphql';
+import { useMutation, useQuery } from '@apollo/client';
+import {
+  Avatar,
+  AvatarBadge,
+  Box,
+  Flex,
+  Stack,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import moment from 'moment';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { GoPrimitiveDot } from 'react-icons/go';
+import DmModal from '../dm/dm-modal';
 
 interface NotificationItemProps {
   conversation: ConversationsQuery['conversations'][0];
-  onClick: () => void;
   hasSeenLatestMessage?: boolean;
   selectedNotificationId?: string;
   userId: number | null;
+  subScribeToCornversation: () => void;
 }
 
 export default function NotificationItem({
   conversation,
-  onClick,
   userId,
+  subScribeToCornversation,
 }: NotificationItemProps) {
-  const handleClick = (event: React.MouseEvent) => {};
+  const {
+    isOpen: isOpenConversation,
+    onOpen: onOpenConversation,
+    onClose: onCloseConversation,
+  } = useDisclosure();
+  const { data } = useQuery(CurrentUserDocument);
+  const [markConversationAsRead] = useMutation(ReadConversationDocument, {
+    variables: { conversationId: conversation.id },
+  });
+
+  useEffect(() => {
+    subScribeToCornversation();
+  }, []);
+
   const hasSeenLatestMessage = conversation.participants.find(
     (p) => p.userId === userId
   )?.hasSeenLatestMessage;
+
+  const handleClick = () => {
+    try {
+      onOpenConversation();
+      // mark message as read
+      if (hasSeenLatestMessage) return;
+      markConversationAsRead();
+    } catch (err) {
+      toast.error('Failed to read message');
+    }
+  };
 
   return (
     <Stack
@@ -34,8 +73,7 @@ export default function NotificationItem({
       //   conversation.id === selectedNotificationId ? 'whiteAlpha.200' : 'none'
       // }
       _hover={{ bg: 'whiteAlpha.200' }}
-      onClick={onClick}
-      onContextMenu={handleClick}
+      onClick={handleClick}
       position="relative"
     >
       <Flex>
@@ -78,6 +116,15 @@ export default function NotificationItem({
           {moment(conversation.updatedAt).fromNow()}
         </Text>
       </Flex>
+      {data?.currentUser && (
+        <DmModal
+          conversationId={conversation.id}
+          sender={data.currentUser}
+          to={conversation.participants}
+          isOpen={isOpenConversation}
+          onClose={onCloseConversation}
+        />
+      )}
     </Stack>
   );
 }

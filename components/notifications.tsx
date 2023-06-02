@@ -48,13 +48,17 @@ export default function NotificationBadge() {
 
         if (!subscriptionData) return prev;
         const newData = subscriptionData.data.newNotification;
+        console.log("NEW NEW",newData);
+        
         return Object.assign({}, prev, newData);
       },
     });
 
   useEffect(() => {
-    subscribeToNotifications();
-  }, []);
+    if (data?.currentUser) {
+      subscribeToNotifications();
+    }
+  }, [data?.currentUser]);
 
   return (
     <>
@@ -74,10 +78,12 @@ export default function NotificationBadge() {
           </Badge>
         )}
       </Button>
-      <MessageNotifications
-        onClose={onCloseNotifictions}
-        isOpen={isOpenNotifications}
-      />
+      {data?.currentUser && (
+        <MessageNotifications
+          onClose={onCloseNotifictions}
+          isOpen={isOpenNotifications}
+        />
+      )}
     </>
   );
 }

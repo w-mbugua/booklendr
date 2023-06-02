@@ -28,7 +28,9 @@ export default function MessageList({
         const newItem = subscriptionData.data.messageSent;
         return Object.assign({}, prev, {
           messages:
-            newItem.sender.id === user.id ? prev.messages : [newItem, ...prev.messages],
+            newItem.sender.id === user.id
+              ? prev.messages
+              : [newItem, ...prev.messages],
         });
       },
     });

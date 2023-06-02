@@ -1,16 +1,17 @@
 import { graphql } from '@/generated/gql';
 
-const CONVERSATIONS = graphql(`
-  query conversations {
-    conversations {
+const CONVERSATION_UPDATED = graphql(`
+  subscription UpdatedConversation($conversationId: Float!) {
+    updatedConversation(conversationId: $conversationId) {
       id
       createdAt
       updatedAt
+	  messages {
+		id
+		body
+	  }
       latestMessage {
         ...messageFields
-      }
-      messages {
-       ...messageFields
       }
       participants {
         userId

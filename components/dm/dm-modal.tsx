@@ -1,11 +1,10 @@
-import { CurrentUserQuery, SendMessageDocument } from '@/generated/gql/graphql';
-import { useMutation } from '@apollo/client';
 import {
-  Box,
-  Divider,
-  Flex,
-  Text
-} from '@chakra-ui/react';
+  ConversationParticipant,
+  CurrentUserQuery,
+  SendMessageDocument,
+} from '@/generated/gql/graphql';
+import { useMutation } from '@apollo/client';
+import { Box, Divider, Flex, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import MainModal, { ModalProps } from '../modal';
@@ -14,7 +13,10 @@ import MessageList from './messagesList';
 
 interface DmModalProps extends ModalProps {
   conversationId: number;
-  to: string;
+  to: Omit<
+    ConversationParticipant,
+    'conversation' | 'createdAt' | 'updatedAt'
+  >[];
   sender: CurrentUserQuery['currentUser'];
 }
 export default function DmModal({
@@ -28,7 +30,6 @@ export default function DmModal({
   const [sendMessage, { data, error, loading }] =
     useMutation(SendMessageDocument);
 
-  console.log({ conversationId });
   const onSendMessage = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -42,6 +43,10 @@ export default function DmModal({
     }
   };
 
+  const receivers = to.filter(
+    (participant) => participant.userId !== sender.id
+  ); // filter out current user
+
   // fetch messages
   return (
     <MainModal
@@ -50,16 +55,21 @@ export default function DmModal({
       header={
         <Box>
           <Flex>
-            <Text fontWeight="bold">To: {to}</Text>
+            <Text fontWeight="bold">To: {receivers.map((r) => r.userId)}</Text>
           </Flex>
           <Divider />
         </Box>
       }
     >
-      <Flex direction="column" minHeight="400px" maxHeight="500px" overflow="hidden">
+      <Flex
+        direction="column"
+        minHeight="400px"
+        maxHeight="500px"
+        overflow="hidden"
+      >
         {/* display messages */}
         <Flex direction="column" overflow="hidden" flexGrow={1}>
-        <MessageList user={sender} conversationId={conversationId} />
+          <MessageList user={sender} conversationId={conversationId} />
         </Flex>
         {/* message input */}
         <MessageInput sender={sender} conversationId={conversationId} />
