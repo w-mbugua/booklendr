@@ -8,7 +8,6 @@ import {
   Stack,
   FormControl,
   FormErrorMessage,
-  FormLabel,
 } from '@chakra-ui/react';
 import { Link } from '@chakra-ui/next-js';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
@@ -20,6 +19,7 @@ import { useMutation } from '@apollo/client';
 import { LoginUserDocument } from '@/generated/gql/graphql';
 import { isEmail, isValidPhone } from '@/utils/helpers';
 import useAuth from '../hooks/useAuth';
+import Label from '@/components/forms/label';
 
 function Login() {
   const router = useRouter();
@@ -73,7 +73,7 @@ function Login() {
 
   return (
     <AuthWrapper>
-      <Text align="center" fontSize="sm">
+      <Text fontSize="sm" color="whiteAlpha.800">
         Enter Your Credentials To Login
       </Text>
       <br />
@@ -87,7 +87,7 @@ function Login() {
               formik.touched.username && Boolean(formik.errors.username)
             }
           >
-            <FormLabel fontSize="sm">Email or Phone Number:</FormLabel>
+            <Label>Email or Phone Number:</Label>
             <Input
               name="username"
               id='username'
@@ -109,7 +109,7 @@ function Login() {
               formik.touched.password && Boolean(formik.errors.password)
             }
           >
-            <FormLabel fontSize="sm">Password:</FormLabel>
+            <Label>Password:</Label>
             <InputGroup fontSize="sm" background="white" size="lg">
               <Input
                 name="password"
@@ -137,7 +137,7 @@ function Login() {
             id="login-btn"
             isLoading={formik.isSubmitting}
             rightIcon={<ArrowForwardIcon />}
-            bg="primaries.olive"
+            bg="primaries.yellow"
             color="primaries.white"
             _hover={{
               backgroundColor: 'primaries.olive',
@@ -146,7 +146,7 @@ function Login() {
           >
             Login
           </Button>
-          <Text fontSize="md">
+          {/* <Text fontSize="md">
             Don&apos;t have an account?{' '}
             <Link
               href="/register"
@@ -155,7 +155,7 @@ function Login() {
             >
               signup
             </Link>
-          </Text>
+          </Text> */}
         </Stack>
       </form>
     </AuthWrapper>

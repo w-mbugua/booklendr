@@ -76,9 +76,11 @@ export const theme = extendTheme({
       slateGray: '#94A7AE',
       lavender: '#C0A9BD',
       brown: '#E09E50',
-      olive: '#647669',
+      olive: '#82dc7d',
       darkBlue: '#2D3E4E',
       white: '#fff',
+      yellow: '#d6a419',
+      yellow2: '#f9f871'
     },
   },
   styles: {
