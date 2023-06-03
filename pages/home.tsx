@@ -2,30 +2,34 @@ import BookPost from '@/components/book-post';
 import Layout from '@/components/layout';
 import SearchBar from '@/components/layout/searchbar';
 import NewBook from '@/components/new-book';
-import { Book, GetBooksDocument, GetBooksQuery } from '@/generated/gql/graphql';
+import {
+  Book,
+  GetBooksDocument,
+  GetBooksQuery,
+  GetTagsDocument,
+} from '@/generated/gql/graphql';
 import { useQuery } from '@apollo/client';
-import { Box, Flex, HStack, Tag, TagLabel, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  HStack,
+  Radio,
+  RadioGroup,
+  Stack,
+  Tag,
+  TagLabel,
+  Text,
+} from '@chakra-ui/react';
 import { size } from 'lodash';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
   const { data, loading } = useQuery(GetBooksDocument);
-  const [allTags, setTags] = useState<string[]>([]);
+  const { data: tagsData, error } = useQuery(GetTagsDocument);
   const [books, setBooks] = useState<GetBooksQuery['getBooks']>(
     data?.getBooks || []
   );
-  const [selectedTag, setSelectedTag] = useState('');
-
-  useEffect(() => {
-    if (data?.getBooks.length) {
-      setBooks(data.getBooks);
-      let tags = new Set<string>();
-      const tagsData = data.getBooks.map((book) => {
-        book.tags.forEach((tag) => tags.add(tag.name));
-      });
-      setTags([...tags]);
-    }
-  }, [data]);
+  const [selectedTag, setSelectedTag] = useState('all');
 
   useEffect(() => {
     if (selectedTag && data?.getBooks.length) {
@@ -42,27 +46,13 @@ export default function Home() {
 
   return (
     <Layout>
-      <Flex marginTop="4em">
-        <Box w="70%" display="grid" justifyContent="center">
-          <HStack justifyContent="end">
-            <NewBook />
-          </HStack>
-          {books.length ? (
-            <Box w="auto" display="flex" flexDirection="column">
-              {books.map((book) => (
-                <BookPost width={100} key={book.id} book={book} />
-              ))}
-            </Box>
-          ) : (
-            <Text>No books found.</Text>
-          )}
-        </Box>
+      <Flex mt="4" ml={4} gap="4em" width="100%">
         <Box height="100%">
           <Box>
             <SearchBar />
           </Box>
           <br />
-          {!!allTags.length && (
+          {!!tagsData?.getTags.length && (
             <Box
               flexWrap="wrap"
               bg="white"
@@ -75,42 +65,57 @@ export default function Home() {
               <Text as="h3" textAlign="center">
                 Topic
               </Text>
-              <Tag
-                size="sm"
-                variant="outline"
-                colorScheme="gray"
-                margin={1}
-                onClick={() => setSelectedTag('all')}
-                cursor="pointer"
-                _hover={{
-                  background: 'primaries.lavender',
-                  color: 'white',
-                  transform: 'scale(1.3)',
-                  mx: 2,
-                }}
+              <RadioGroup
+                onChange={(val) => setSelectedTag(val)}
+                value={selectedTag}
               >
-                <TagLabel>All</TagLabel>
-              </Tag>
-              {allTags.map((tag) => (
-                <Tag
-                  size="sm"
-                  key={tag}
-                  variant="outline"
-                  colorScheme="gray"
-                  margin={1}
-                  onClick={() => setSelectedTag(tag)}
-                  cursor="pointer"
-                  _hover={{
-                    background: 'primaries.lavender',
-                    color: 'white',
-                    transform: 'scale(1.3)',
-                    mx: 2,
-                  }}
-                >
-                  <TagLabel>{tag}</TagLabel>
-                </Tag>
-              ))}
+                <Stack>
+                  <Radio
+                    size="sm"
+                    name="all"
+                    value="all"
+                    cursor="pointer"
+                    _hover={{
+                      background: 'primaries.olive',
+                      color: 'white',
+                    }}
+                  >
+                    All
+                  </Radio>
+                  {tagsData.getTags.map((tag) => (
+                    <Radio
+                      key={tag.id}
+                      size="sm"
+                      margin={1}
+                      cursor="pointer"
+                      value={tag.name}
+                      _hover={{
+                        background: 'primaries.olive',
+                        color: 'white',
+                      }}
+                    >
+                      {tag.name}
+                    </Radio>
+                  ))}
+                </Stack>
+              </RadioGroup>
             </Box>
+          )}
+        </Box>
+        <Box w="100%" justifyContent="center">
+          <HStack width="90%" justifyContent="end">
+            <NewBook />
+          </HStack>
+          {books.length ? (
+            <Flex gap="20px" flexWrap="wrap">
+              {books.map((book) => (
+                <Box minWidth="300px" key={book.id} width="30%">
+                  <BookPost book={book} width={100} />
+                </Box>
+              ))}
+            </Flex>
+          ) : (
+            <Text>No books found.</Text>
           )}
         </Box>
       </Flex>
