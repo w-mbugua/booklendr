@@ -34,21 +34,49 @@ export default function UserProfile() {
 
   const { data, loading, error } = useQuery(GetBooksByOwnerDocument, {
     variables: { ownerId: Number(id) },
-    skip: !id
+    skip: !id,
   });
-
 
   return (
     <Layout>
       <Box>
-        <Tabs>
+        <Box
+          backgroundImage="url('/header2.png')"
+          filter="brightness(0.5) contrast(1.2) blur(1px)"
+          opacity="0.7"
+          backgroundSize="cover"
+          backgroundPosition="center"
+          backgroundRepeat="no-repeat"
+          width="100%"
+          height="100%"
+        ></Box>
+        <Tabs align="center">
           <Flex direction="column" gap="20px">
-            <Box bg="white" p={4}>
-              <TabList border="none">
-                <Tab>Profile</Tab>
-                <Tab>Borrowed</Tab>
-                <Tab>Reserved</Tab>
-              </TabList>
+            <Box position="relative">
+              <Box
+                backgroundImage="url('/header2.png')"
+                filter="brightness(0.5) contrast(1.2) blur(1px)"
+                opacity="0.7"
+                backgroundSize="cover"
+                backgroundPosition="center"
+                backgroundRepeat="no-repeat"
+                height="100%"
+                width="100%"
+                minHeight="80px"
+                pt={4}
+              ></Box>
+              <Box
+                position="absolute"
+                bottom={-25}
+                left={{ base: 0, md: '25%', lg: '35%' }}
+                transform={{ base: 'translate(0%, -50%)', md: '' }}
+              >
+                <TabList border="none" color="white" bg="primaries.yellow">
+                  <Tab>Profile</Tab>
+                  <Tab>Borrowed</Tab>
+                  <Tab>Reserved</Tab>
+                </TabList>
+              </Box>
             </Box>
             <Box bg="white">
               <TabPanels>

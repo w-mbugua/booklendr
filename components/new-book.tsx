@@ -78,10 +78,11 @@ export default function NewBook() {
         variant="outline"
         size="sm"
         colorScheme="tomato"
+        minWidth="100px"
         leftIcon={<AddIcon />}
         onClick={onOpen}
         _hover={{
-          backgroundColor: 'primaries.olive',
+          backgroundColor: 'primaries.yellow',
           color: 'primaries.white',
           border: 'none',
         }}
@@ -152,13 +153,17 @@ export default function NewBook() {
               variant="solid"
               type="submit"
               id="new-book-btn"
-              background="primaries.olive"
+              background="primaries.yellow"
               color="primaries.white"
               mr={3}
             >
               Submit
             </Button>
-            <Button variant="outline" color="primaries.olive" onClick={onClose}>
+            <Button
+              variant="outline"
+              color="primaries.yellow"
+              onClick={onClose}
+            >
               Cancel
             </Button>
           </Box>

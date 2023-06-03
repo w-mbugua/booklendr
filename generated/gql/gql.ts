@@ -41,6 +41,7 @@ const documents = {
     "\n  query Messages($conversationId: Float!) {\n    messages(conversationId: $conversationId) {\n      id\n\t  createdAt\n      conversation {\n        id\n      }\n      body\n      sender {\n        username\n        id\n      }\n    }\n  }\n": types.MessagesDocument,
     "\n  query GET_LENDER_RESERVATIONS($lenderId: Float!) {\n    reservationsByLenderId(lenderId: $lenderId) {\n      ...reservationFields\n    }\n  }\n": types.Get_Lender_ReservationsDocument,
     "\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n": types.Search_BooksDocument,
+    "\n  query GetTags {\n    getTags {\n      id\n      name\n      books {\n        ...basicBookFields\n        owner {\n          ...userFields\n        }\n      }\n    }\n  }\n": types.GetTagsDocument,
     "\n  subscription UpdatedConversation($conversationId: Float!) {\n    updatedConversation(conversationId: $conversationId) {\n      id\n      createdAt\n      updatedAt\n\t  messages {\n\t\tid\n\t\tbody\n\t  }\n      latestMessage {\n        ...messageFields\n      }\n      participants {\n        userId\n        hasSeenLatestMessage\n        id\n      }\n    }\n  }\n": types.UpdatedConversationDocument,
     "\n  subscription messageSent($conversationId: Float!) {\n    messageSent(conversationId: $conversationId) {\n      id\n\t  body\n      createdAt\n      conversation {\n        id\n      }\n\t  sender {\n\t\tid\n\t\tusername\n\t  }\n    }\n  }\n": types.MessageSentDocument,
     "\n  subscription notifications($userId: Float!) {\n    newNotification(userId: $userId) {\n      ...userFields\n    }\n  }\n": types.NotificationsDocument,
@@ -172,6 +173,10 @@ export function graphql(source: "\n  query GET_LENDER_RESERVATIONS($lenderId: Fl
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n"): (typeof documents)["\n  query SEARCH_BOOKS($searchTerm: String!) {\n    searchBook(searchTerm: $searchTerm) {\n      id\n      title\n\t  cover\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetTags {\n    getTags {\n      id\n      name\n      books {\n        ...basicBookFields\n        owner {\n          ...userFields\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetTags {\n    getTags {\n      id\n      name\n      books {\n        ...basicBookFields\n        owner {\n          ...userFields\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -23,7 +23,7 @@ import {
   ReadNotificationsDocument,
 } from '@/generated/gql/graphql';
 import { useRouter } from 'next/router';
-import NotificationBadge from '../notifications';
+import NotificationBadge from './notifications';
 import MessageNotifications from '../notifications/message-notifications';
 import { toast } from 'react-hot-toast';
 
@@ -58,7 +58,7 @@ export default function Sidebar() {
             fontSize="lg"
             as={Link}
             href="/home"
-            color="primaries.olive"
+            color="primaries.yellow"
             fontWeight="bold"
           >
             Welcome, {startCase(currentUser?.username)}

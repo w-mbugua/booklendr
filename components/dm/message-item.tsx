@@ -9,7 +9,6 @@ interface MessageItemProps {
 }
 
 function MessageItem({ message, sentByMe }: MessageItemProps) {
-
   return (
     <Stack
       direction="row"
@@ -40,7 +39,7 @@ function MessageItem({ message, sentByMe }: MessageItemProps) {
         </Stack>
         <Flex justify={sentByMe ? 'flex-end' : 'flex-start'}>
           <Box
-            bg={sentByMe ? 'primaries.lavender' : 'primaries.lightBlue'}
+            bg={sentByMe ? 'primaries.olive' : 'primaries.lightBlue'}
             px={2}
             py={1}
             borderRadius={12}

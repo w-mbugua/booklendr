@@ -16,7 +16,7 @@ import {
 import { BellAlertIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import MessageNotifications from './notifications/message-notifications';
+import MessageNotifications from '../notifications/message-notifications';
 
 export default function NotificationBadge() {
   const { data, error, loading, subscribeToMore } =
@@ -48,8 +48,7 @@ export default function NotificationBadge() {
 
         if (!subscriptionData) return prev;
         const newData = subscriptionData.data.newNotification;
-        console.log("NEW NEW",newData);
-        
+
         return Object.assign({}, prev, newData);
       },
     });
@@ -63,19 +62,21 @@ export default function NotificationBadge() {
   return (
     <>
       <Button
-        variant="ghost"
-        leftIcon={<Icon as={BellAlertIcon} />}
+        variant="unstyled"
         onClick={onOpenNotifications}
         display="flex"
         justifyContent="start"
+        fontWeight='normal'
+        padding={6}
+
       >
         Messages
         {data?.currentUser && (
-          <Badge ml="1" colorScheme="green">
+          <>
             {Number(data?.currentUser.unreadMessages) > 0
-              ? data?.currentUser.unreadMessages
+              ? ` (${data?.currentUser.unreadMessages})`
               : ''}
-          </Badge>
+          </>
         )}
       </Button>
       {data?.currentUser && (

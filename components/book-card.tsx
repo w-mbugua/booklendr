@@ -9,13 +9,17 @@ import {
   GridItem,
   Button,
 } from '@chakra-ui/react';
-import { Book, CurrentUserDocument, GetBooksQuery } from '@/generated/gql/graphql';
+import {
+  Book,
+  CurrentUserDocument,
+  GetBooksQuery,
+} from '@/generated/gql/graphql';
 import moment from 'moment';
 import Image from 'next/image';
 import { useQuery } from '@apollo/client';
 
 export interface BookCardProps {
-  book: GetBooksQuery['getBooks'][0]
+  book: GetBooksQuery['getBooks'][0];
 }
 const BookCard = ({ book }: BookCardProps) => {
   const bg = useColorModeValue('white', 'gray.800');
@@ -34,7 +38,10 @@ const BookCard = ({ book }: BookCardProps) => {
     >
       <Flex justifyContent="space-between" alignItems="center" my="3">
         <Text fontSize="sm">
-          @{data && data.currentUser.id === book.owner.id ? 'me' : book.owner.username}
+          @
+          {data && data.currentUser.id === book.owner.id
+            ? 'me'
+            : book.owner.username}
         </Text>
         <Text fontSize="sm">
           {moment(book.createdAt).format('Do MMM YYYY')}
@@ -56,7 +63,7 @@ const BookCard = ({ book }: BookCardProps) => {
               <Badge
                 borderRadius="full"
                 px="2"
-                bg="primaries.lavender"
+                bg="primaries.olive"
                 color="primaries.white"
               >
                 {book.status}
@@ -78,8 +85,8 @@ const BookCard = ({ book }: BookCardProps) => {
                   size="sm"
                   width="200px"
                   border="2px"
-                  borderColor="primaries.olive"
-                  color="primaries.olive"
+                  borderColor="primaries.yellow"
+                  color="primaries.yellow"
                   my={2}
                   isDisabled={
                     book.loans[0]?.borrower.id === data?.currentUser.id

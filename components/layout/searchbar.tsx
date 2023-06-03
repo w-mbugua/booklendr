@@ -44,7 +44,7 @@ export default function SearchBar() {
     },
   });
   return (
-    <InputGroup borderColor="primaries.olive">
+    <InputGroup borderColor="primaries.yellow">
       <Input
         size="md"
         {...getInputProps({
@@ -59,7 +59,7 @@ export default function SearchBar() {
         })}
       />
       <InputRightElement>
-        <SearchIcon {...getToggleButtonProps()} color="primaries.olive" />
+        <SearchIcon {...getToggleButtonProps()} color="primaries.yellow" />
       </InputRightElement>
       <ul
         style={{
@@ -86,7 +86,7 @@ export default function SearchBar() {
                 paddingTop: '5px',
                 display: 'grid',
                 gridTemplateColumns: 'auto 1fr',
-                gap: '2em'
+                gap: '2em',
               }}
             >
               <Image
