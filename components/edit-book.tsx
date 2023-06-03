@@ -13,9 +13,11 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Icon,
   Input,
   Text,
   Textarea,
+  Tooltip,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
@@ -96,24 +98,13 @@ export default function EditBook({ book }: BookCardProps) {
 
   return (
     <>
-      <Button
-        variant="outline"
-        size="sm"
-        border="2px"
-        borderColor="primaries.olive"
-        color="primaries.olive"
-        my={2}
-        mx={2}
-        isLoading={loading}
-        leftIcon={<EditIcon />}
-        onClick={onOpen}
-      >
-        Edit Book
+      <Button variant="unstyled" fontWeight="normal" onClick={onOpen}>
+        Edit &bull;
       </Button>
+
       <MainModal
         initialRef={initialRef}
         isOpen={isOpen}
-        onOpen={onOpen}
         onClose={onClose}
         header="Edit Book"
         size="2xl"
@@ -239,14 +230,18 @@ export default function EditBook({ book }: BookCardProps) {
               variant="solid"
               type="submit"
               id="new-book-btn"
-              background="primaries.olive"
+              background="primaries.yellow"
               color="primaries.white"
               mr={3}
               isLoading={loading}
             >
               Submit
             </Button>
-            <Button variant="outline" color="primaries.olive" onClick={onClose}>
+            <Button
+              variant="outline"
+              color="primaries.yellow"
+              onClick={onClose}
+            >
               Cancel
             </Button>
           </Box>

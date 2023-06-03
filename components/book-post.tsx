@@ -14,6 +14,7 @@ import {
   TagLabel,
   TagLeftIcon,
   Text,
+  Tooltip,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
@@ -103,7 +104,7 @@ export default function BookPost({
       <Box boxShadow="xl" w={`${width}%`} m={2} bgColor="white" id="book-post">
         {secondaryContent && (
           <Flex w="100%" justifyContent="space-between" padding={2}>
-            <Tag size="md" variant="subtle" color="primaries.olive">
+            <Tag size="md" variant="subtle" color="primaries.yellow">
               <Avatar src="" size="xs" ml={-1} mr={2} />
               <TagLabel>
                 @
@@ -123,27 +124,51 @@ export default function BookPost({
           paddingBlockEnd={6}
           height="200px"
         >
-          <Image src={book.cover} width="100" height="150" alt={book.title} />
+          <Image src={book.cover} width="120" height="150" alt={book.title} />
         </Box>
         <Stack>
           {/* flex for thumbnail and text title */}
-          <Flex justifyContent="space-between" paddingInline={2}>
-            {book.thumbnail && (
-              <Image
-                src={book.thumbnail as string}
-                width="40"
-                height="40"
-                alt={book.title}
-              />
-            )}
-            <Text>{startCase(book.title)}</Text>
+          <Flex direction="column" p={2}>
+            <Flex direction="column" justifyContent="space-between" mt={3}>
+              <Text>{startCase(book.title)}</Text>
+              <Flex justifyContent="start" gap="10px" mb={2}>
+                {user && user.currentUser.id === book.owner.id ? (
+                  <>
+                    <EditBook book={book} />
+                    <Button
+                      variant="unstyled"
+                      fontWeight="normal"
+                      onClick={onOpenAlert}
+                    >
+                      Delete &bull;
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    variant="unstyled"
+                    fontWeight="normal"
+                    onClick={onOpenBorrowAlert}
+                    isDisabled={
+                      book.loans[0]?.borrower.id === user?.currentUser.id ||
+                      reservers.includes(Number(user?.currentUser.id))
+                    }
+                  >
+                    Borrow
+                  </Button>
+                )}
+                <Button variant="unstyled" fontWeight="normal" onClick={onOpen}>
+                  view more
+                </Button>
+              </Flex>
+            </Flex>
 
             {book.tags.map((tag) => (
               <Tag
                 size="sm"
+                width="max-content"
                 key={tag.name}
                 variant="solid"
-                bg="primaries.lavender"
+                bg="primaries.olive"
                 mt={1}
                 padding={1}
               >
@@ -159,6 +184,7 @@ export default function BookPost({
                     <Text fontSize="sm" mr={2}>
                       Borrow Request Status:{' '}
                     </Text>
+
                     <Button
                       size="sm"
                       border="2px"
@@ -200,54 +226,6 @@ export default function BookPost({
                   {error}
                 </Text>
               )}
-              <Flex justifyContent="space-evenly">
-                {user && user.currentUser.id === book.owner.id ? (
-                  <Flex>
-                    <EditBook book={book} />
-                    <Button
-                      size="sm"
-                      border="2px"
-                      borderColor="primaries.olive"
-                      color="primaries.olive"
-                      my={2}
-                      mx={2}
-                      onClick={onOpenAlert}
-                      isLoading={loading}
-                      leftIcon={<DeleteIcon />}
-                    >
-                      Delete
-                    </Button>
-                  </Flex>
-                ) : (
-                  <Button
-                    size="sm"
-                    border="2px"
-                    width="130px"
-                    borderColor="primaries.olive"
-                    color="primaries.olive"
-                    my={2}
-                    leftIcon={<AddIcon />}
-                    onClick={onOpenBorrowAlert}
-                    isDisabled={
-                      book.loans[0]?.borrower.id === user?.currentUser.id ||
-                      reservers.includes(Number(user?.currentUser.id))
-                    }
-                  >
-                    Borrow
-                  </Button>
-                )}
-
-                <Button
-                  size="sm"
-                  border="2px"
-                  color="primaries.olive"
-                  my={2}
-                  onClick={onOpen}
-                  leftIcon={<ViewIcon />}
-                >
-                  View More
-                </Button>
-              </Flex>
             </>
           )}
         </Stack>
@@ -328,7 +306,7 @@ function BorrowBookResponse({
     message = 'This book is currently taken. Would you like to reserve it?';
     actionBtn = (
       <Button
-        bg="primaries.lavender"
+        bg="primaries.olive"
         color="primaries.white"
         onClick={handleReservation}
         ml={3}
@@ -340,7 +318,7 @@ function BorrowBookResponse({
     message = 'This book is currently available. Would you like to proceed?';
     actionBtn = (
       <Button
-        bg="primaries.lavender"
+        bg="primaries.olive"
         color="primaries.white"
         onClick={handleBorrow}
         ml={3}
