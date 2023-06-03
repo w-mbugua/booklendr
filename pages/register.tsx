@@ -18,6 +18,7 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
 import { RegisterDocument } from '@/generated/gql/graphql';
+import Label from '@/components/forms/label';
 
 function Register() {
   const router = useRouter();
@@ -62,7 +63,7 @@ function Register() {
 
   return (
     <AuthWrapper>
-      <Text align="center" fontSize="sm">
+      <Text color="whiteAlpha.800" fontSize="sm">
         Enter Your Details To Register
       </Text>
       <br />
@@ -77,7 +78,7 @@ function Register() {
               formik.touched.username && Boolean(formik.errors.username)
             }
           >
-            <FormLabel fontSize="sm">Username: *</FormLabel>
+            <Label>Username *</Label>
             <Input
               name="username"
               id="username"
@@ -97,7 +98,7 @@ function Register() {
             margin={1}
             isInvalid={formik.touched.email && Boolean(formik.errors.email)}
           >
-            <FormLabel fontSize="sm">Email Address *</FormLabel>
+            <Label>Email Address *</Label>
             <Input
               name="email"
               id="email"
@@ -117,7 +118,7 @@ function Register() {
               formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
             }
           >
-            <FormLabel fontSize="sm">Phone Number</FormLabel>
+            <Label>Phone Number</Label>
             <Input
               name="phoneNumber"
               id="phoneNumber"
@@ -138,7 +139,7 @@ function Register() {
               formik.touched.password && Boolean(formik.errors.password)
             }
           >
-            <FormLabel fontSize="sm">Password *</FormLabel>
+            <Label>Password *</Label>
             <InputGroup background="white" size="md">
               <Input
                 name="password"
@@ -165,16 +166,16 @@ function Register() {
             type="submit"
             id="register-btn"
             colorScheme="blackAlpha"
-            bg="primaries.olive"
+            bg="primaries.yellow"
           >
             Register
           </Button>
-          <Text fontSize="md">
+          {/* <Text fontSize="md">
             Already have an account?{' '}
             <Link href="/login" color="blue.400" _hover={{ color: 'blue.600' }}>
               login
             </Link>
-          </Text>
+          </Text> */}
         </Stack>
       </form>
     </AuthWrapper>

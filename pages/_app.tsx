@@ -15,16 +15,25 @@ import type { AppProps } from 'next/app';
 import {
   Merriweather,
   Lato,
+  Inter,
+  Poppins,
   Open_Sans,
   Source_Sans_Pro,
+  Playfair_Display,
 } from 'next/font/google';
 import { createUploadLink } from 'apollo-upload-client';
 import { createClient } from 'graphql-ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
-const merriweather = Open_Sans({
+const font = Open_Sans({
   subsets: ['latin'],
   weight: ['300', '400'],
+  style: ['normal', 'italic'],
+});
+
+const headingFont = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['700'],
   style: ['normal', 'italic'],
 });
 
@@ -34,8 +43,8 @@ const wsLink =
         createClient({
           url: process.env.NEXT_PUBLIC_WS_URL as string,
           connectionParams: {
-            credentials: 'include'
-          }
+            credentials: 'include',
+          },
         })
       )
     : null;
@@ -76,10 +85,16 @@ export const theme = extendTheme({
       slateGray: '#94A7AE',
       lavender: '#C0A9BD',
       brown: '#E09E50',
-      olive: '#647669',
+      olive: '#82dc7d',
       darkBlue: '#2D3E4E',
       white: '#fff',
+      yellow: '#d6a419',
+      yellow2: '#f9f871',
     },
+  },
+  fonts: {
+    body: font.style.fontFamily,
+    heading: headingFont.style.fontFamily,
   },
   styles: {
     global: {
@@ -110,7 +125,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <ApolloProvider client={client}>
-        <main className={merriweather.className} style={{ height: '100%' }}>
+        <main style={{ height: '100%', fontSize: '16px' }}>
           <Component {...pageProps} />
         </main>
       </ApolloProvider>
