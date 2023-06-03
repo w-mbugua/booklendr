@@ -26,7 +26,7 @@ function Login() {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
-  const [login, { data, error, loading }] = useMutation(LoginUserDocument);  
+  const [login, { data, error, loading }] = useMutation(LoginUserDocument);
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().test((username) => {
@@ -90,7 +90,7 @@ function Login() {
             <Label>Email or Phone Number:</Label>
             <Input
               name="username"
-              id='username'
+              id="username"
               background="white"
               size="lg"
               fontSize="sm"
@@ -113,7 +113,7 @@ function Login() {
             <InputGroup fontSize="sm" background="white" size="lg">
               <Input
                 name="password"
-                id='password'
+                id="password"
                 pr="4.5rem"
                 type={show ? 'text' : 'password'}
                 onChange={formik.handleChange}
@@ -140,7 +140,7 @@ function Login() {
             bg="primaries.yellow"
             color="primaries.white"
             _hover={{
-              backgroundColor: 'primaries.olive',
+              backgroundColor: 'primaries.yellow',
               color: 'black',
             }}
           >
