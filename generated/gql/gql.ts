@@ -21,7 +21,7 @@ const documents = {
     "\n  fragment userFields on Member {\n    id\n    email\n    phoneNumber\n    username\n    unreadMessages\n  }\n": types.UserFieldsFragmentDoc,
     "\n  mutation AddBook($newBookData: NewBookInput!) {\n    addBook(newBookData: $newBookData) {\n      ...bookFields\n    }\n  }\n": types.AddBookDocument,
     "\n  mutation BORROW_BOOK($borrowId: Float!) {\n    borrow(id: $borrowId) {\n      message\n      book {\n        title\n\t\tstatus\n        loans {\n          status\n          returnDate\n          borrower {\n            id\n          }\n        }\n      }\n    }\n  }\n": types.Borrow_BookDocument,
-    "\nmutation createConversation($createConversationData: conversationsInput!){\n\tcreateConversation(createConversationData: $createConversationData) {\n\t\tconversation {\n\t\t\tid\n\t\t}\n\t}\n}": types.CreateConversationDocument,
+    "\n  mutation createConversation($createConversationData: conversationsInput!) {\n    createConversation(createConversationData: $createConversationData) {\n      conversation {\n        id\n        createdAt\n        participants {\n          id\n          userId\n          hasSeenLatestMessage\n          updatedAt\n        }\n      }\n    }\n  }\n": types.CreateConversationDocument,
     "\n  mutation deleteBook($id: Float!) {\n\tdeleteBook(id: $id)\n  }\n": types.DeleteBookDocument,
     "\nmutation loginUser($email: String, $phoneNumber: String, $password: String!) {\n\tlogin(loginInput: { email: $email, phoneNumber: $phoneNumber, password: $password }) {\n\t  member {\n\t\tid\n\t\tusername\n\t\tphoneNumber\n\t\temail\n\t  }\n\t  error {\n\t\tmessage\n\t  }\n\t}\n  }\n": types.LoginUserDocument,
     "\n  mutation Logout {\n\tlogout\n  }\n": types.LogoutDocument,
@@ -96,7 +96,7 @@ export function graphql(source: "\n  mutation BORROW_BOOK($borrowId: Float!) {\n
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\nmutation createConversation($createConversationData: conversationsInput!){\n\tcreateConversation(createConversationData: $createConversationData) {\n\t\tconversation {\n\t\t\tid\n\t\t}\n\t}\n}"): (typeof documents)["\nmutation createConversation($createConversationData: conversationsInput!){\n\tcreateConversation(createConversationData: $createConversationData) {\n\t\tconversation {\n\t\t\tid\n\t\t}\n\t}\n}"];
+export function graphql(source: "\n  mutation createConversation($createConversationData: conversationsInput!) {\n    createConversation(createConversationData: $createConversationData) {\n      conversation {\n        id\n        createdAt\n        participants {\n          id\n          userId\n          hasSeenLatestMessage\n          updatedAt\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation createConversation($createConversationData: conversationsInput!) {\n    createConversation(createConversationData: $createConversationData) {\n      conversation {\n        id\n        createdAt\n        participants {\n          id\n          userId\n          hasSeenLatestMessage\n          updatedAt\n        }\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

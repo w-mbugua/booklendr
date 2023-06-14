@@ -2220,7 +2220,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "Author",
+                    "name": "Tag",
                     "ofType": null
                   }
                 }

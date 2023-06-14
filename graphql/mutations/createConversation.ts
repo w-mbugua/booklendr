@@ -1,10 +1,18 @@
 import { graphql } from '@/generated/gql';
 
 const CREATE_CONVERSATION = graphql(`
-mutation createConversation($createConversationData: conversationsInput!){
-	createConversation(createConversationData: $createConversationData) {
-		conversation {
-			id
-		}
-	}
-}`);
+  mutation createConversation($createConversationData: conversationsInput!) {
+    createConversation(createConversationData: $createConversationData) {
+      conversation {
+        id
+        createdAt
+        participants {
+          id
+          userId
+          hasSeenLatestMessage
+          updatedAt
+        }
+      }
+    }
+  }
+`);
