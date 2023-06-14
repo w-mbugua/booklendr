@@ -28,8 +28,6 @@ function Register() {
   const [register, response] = useMutation(RegisterDocument);
   const { data, error, loading } = response;
 
-  console.log(response);
-
   useEffect(() => {
     if (data?.register.member && !data?.register.error) {
       router.replace('/login');
