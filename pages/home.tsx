@@ -1,9 +1,8 @@
-import BookPost from '@/components/book-post';
+import BookCard from '@/components/book/book-card';
 import Layout from '@/components/layout';
 import SearchBar from '@/components/layout/searchbar';
-import NewBook from '@/components/new-book';
+import NewBook from '@/components/book/new-book';
 import {
-  Book,
   GetBooksDocument,
   GetBooksQuery,
   GetTagsDocument
@@ -11,16 +10,14 @@ import {
 import { useQuery } from '@apollo/client';
 import {
   Box,
+  Divider,
   Flex,
   HStack,
   Radio,
   RadioGroup,
   Stack,
-  Tag,
-  TagLabel,
   Text
 } from '@chakra-ui/react';
-import { size } from 'lodash';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
@@ -104,16 +101,24 @@ export default function Home() {
             </Box>
           )}
         </Box>
-        <Box w="100%" justifyContent="center">
+        <Box w="100%" justifyContent="center" bg="white" p={6}>
           <HStack width="90%" justifyContent="end">
             <NewBook />
           </HStack>
           {books.length ? (
-            <Flex gap="20px" flexWrap="wrap">
-              {books.map((book) => (
-                <Box minWidth="300px" key={book.id} width="30%">
-                  <BookPost book={book} width={100} />
-                </Box>
+            <Flex gap="20px" direction="column" flexWrap="wrap">
+              {books.map((book, idx) => (
+                <>
+                  <BookCard key={book.id} book={book} />
+                  {books.length > 1 && idx < books.length - 1 && (
+                    <Divider />
+                  )}
+                </>
+                /* 
+                                <Box minWidth="300px" key={book.id} width="30%">
+                                    <BookPost book={book} width={100} />
+                                </Box>
+                                 */
               ))}
             </Flex>
           ) : (

@@ -125,7 +125,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <ApolloProvider client={client}>
-        <main style={{ height: '100%', fontSize: '16px' }}>
+        <main
+          style={{
+            height: '100%',
+            fontSize: '16px',
+            backgroundColor: '#f5f5f5'
+          }}
+        >
           <Component {...pageProps} />
         </main>
       </ApolloProvider>

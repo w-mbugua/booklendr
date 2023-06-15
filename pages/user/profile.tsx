@@ -90,6 +90,7 @@ export default function UserProfile() {
                               <BookPost
                                 key={book.id}
                                 book={book}
+                                width={100}
                                 secondaryContent={false}
                               />
                             ))}

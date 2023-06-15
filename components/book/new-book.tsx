@@ -155,6 +155,10 @@ export default function NewBook() {
               id="new-book-btn"
               background="primaries.yellow"
               color="primaries.white"
+              _hover={{
+                bg: 'primaries.yellow',
+                color: 'white'
+              }}
               mr={3}
             >
               Submit

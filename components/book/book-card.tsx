@@ -7,19 +7,22 @@ import {
   useColorModeValue,
   Grid,
   GridItem,
-  Button
+  Button,
+  Tag,
+  TagLabel
 } from '@chakra-ui/react';
 import {
-  Book,
   CurrentUserDocument,
-  GetBooksQuery
 } from '@/generated/gql/graphql';
 import moment from 'moment';
 import Image from 'next/image';
 import { useQuery } from '@apollo/client';
+import BookCardActions from './book-card-actions';
+import { Book } from '@/types';
+import { capitalize, startCase } from 'lodash';
 
 export interface BookCardProps {
-  book: GetBooksQuery['getBooks'][0];
+  book: Book,
 }
 const BookCard = ({ book }: BookCardProps) => {
   const bg = useColorModeValue('white', 'gray.800');
@@ -29,11 +32,11 @@ const BookCard = ({ book }: BookCardProps) => {
   return (
     <Box
       bg={bg}
-      borderWidth="1px"
-      borderRadius="lg"
+      //   borderWidth="1px"
+      //   borderRadius="lg"
+      //   borderColor={borderColor}
       overflow="hidden"
-      borderColor={borderColor}
-      width="550px"
+      width="100%"
       padding={4}
     >
       <Flex justifyContent="space-between" alignItems="center" my="3">
@@ -48,7 +51,7 @@ const BookCard = ({ book }: BookCardProps) => {
         </Text>
       </Flex>
       <Grid templateColumns="repeat(5, 1fr)" gap={2}>
-        <GridItem w="100%" colSpan={2}>
+        <GridItem w="auto" colSpan={1}>
           <Image
             src={book.cover}
             width="200"
@@ -71,7 +74,7 @@ const BookCard = ({ book }: BookCardProps) => {
             </Flex>
 
             <Box mt="1" as="h4" lineHeight="tight" isTruncated>
-              {book.title}
+              <Text>{startCase(book.title)}</Text>
             </Box>
             <Box mt="1" as="h6" lineHeight="tight" isTruncated>
               {book.subtitle}
@@ -79,6 +82,20 @@ const BookCard = ({ book }: BookCardProps) => {
             <Text mt="2" color={useColorModeValue('gray.600', 'gray.400')}>
               by {book.author.name}
             </Text>
+            <Flex>
+              {book.tags.map((tag) => (
+                <Tag
+                  size="sm"
+                  width="max-content"
+                  key={tag.name}
+                  variant="solid"
+                  mt={1}
+                  padding={1}
+                >
+                  <TagLabel>{capitalize(tag.name)}</TagLabel>
+                </Tag>
+              ))}
+            </Flex>
             {data && data.currentUser.id !== book.owner.id && (
               <Box>
                 <Button
@@ -97,8 +114,12 @@ const BookCard = ({ book }: BookCardProps) => {
               </Box>
             )}
             <Text mt="2" color={useColorModeValue('gray.600', 'gray.400')}>
-              {book.textSnippet}... Continue Reading
+              {book.description}
             </Text>
+            {data && data.currentUser && (
+              <BookCardActions user={data.currentUser} book={book} />
+            )}
+
           </Box>
         </GridItem>
       </Grid>
