@@ -21,13 +21,12 @@ export default function ProfileHeader() {
   const { logout } = useLogout();
 
   return (
-    <Box pl={8}>
+    <Box display='flex' alignItems='center' px={6}>
       <Menu>
         <MenuButton
           as={Button}
           variant="unstyled"
           fontWeight="normal"
-          padding={3}
           rightIcon={<ChevronDownIcon />}
         >
           {capitalize(currentUser?.username)}

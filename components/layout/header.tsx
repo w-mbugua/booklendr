@@ -41,6 +41,7 @@ export default function Header() {
         justifyContent="flex-end"
         height="40%"
         width={{ base: '100%', sm: '80%' }}
+        alignItems='center'
       >
         <Box display={{ base: 'flex', sm: 'none' }} mb={6}>
           <Menu>

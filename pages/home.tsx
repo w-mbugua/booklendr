@@ -101,7 +101,7 @@ export default function Home() {
             </Box>
           )}
         </Box>
-        <Box w="100%" justifyContent="center" bg="white" p={6}>
+        <Box w="100%" h='100%' justifyContent="center" bg={books?.length ? "white" : 'inherit'} p={6}>
           <HStack width="90%" justifyContent="end">
             <NewBook />
           </HStack>

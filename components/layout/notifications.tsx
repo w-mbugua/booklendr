@@ -4,7 +4,7 @@ import {
   ReadNotificationsDocument
 } from '@/generated/gql/graphql';
 import { useMutation, useQuery } from '@apollo/client';
-import { Box, Button, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import MessageNotifications from '../notifications/message-notifications';
@@ -51,20 +51,13 @@ export default function NotificationBadge({ pad = 0 }: { pad?: number }) {
   }, [data?.currentUser]);
 
   return (
-    <Box>
-      <Button
-        variant="unstyled"
-        onClick={onOpenNotifications}
-        display="flex"
-        justifyContent="start"
-        fontWeight="normal"
-        padding={pad}
-      >
-        Messages
-        {data?.currentUser && Number(data.currentUser.unreadMessages) > 0
+    <Box px={6} cursor='pointer'>
+      <Flex h='100%' alignItems='center'>
+
+        <Text onClick={onOpenNotifications}>Messages  {data?.currentUser && Number(data.currentUser.unreadMessages) > 0
           ? ` (${data.currentUser.unreadMessages})`
-          : ''}
-      </Button>
+          : ''}</Text>
+      </Flex>
       {data?.currentUser && (
         <MessageNotifications
           onClose={onCloseNotifictions}
