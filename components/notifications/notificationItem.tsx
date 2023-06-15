@@ -1,7 +1,7 @@
 import {
   ConversationsQuery,
   CurrentUserDocument,
-  ReadConversationDocument,
+  ReadConversationDocument
 } from '@/generated/gql/graphql';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -11,7 +11,7 @@ import {
   Flex,
   Stack,
   Text,
-  useDisclosure,
+  useDisclosure
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { useEffect } from 'react';
@@ -30,16 +30,16 @@ interface NotificationItemProps {
 export default function NotificationItem({
   conversation,
   userId,
-  subScribeToCornversation,
+  subScribeToCornversation
 }: NotificationItemProps) {
   const {
     isOpen: isOpenConversation,
     onOpen: onOpenConversation,
-    onClose: onCloseConversation,
+    onClose: onCloseConversation
   } = useDisclosure();
   const { data } = useQuery(CurrentUserDocument);
   const [markConversationAsRead] = useMutation(ReadConversationDocument, {
-    variables: { conversationId: conversation.id },
+    variables: { conversationId: conversation.id }
   });
 
   useEffect(() => {

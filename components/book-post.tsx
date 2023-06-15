@@ -16,7 +16,7 @@ import {
   Text,
   Tooltip,
   useDisclosure,
-  useToast,
+  useToast
 } from '@chakra-ui/react';
 import BookCard, { BookCardProps } from './book-card';
 import Image from 'next/image';
@@ -32,7 +32,7 @@ import {
   DeleteBookDocument,
   GetBooksDocument,
   GetBooksQuery,
-  Reserve_BookDocument,
+  Reserve_BookDocument
 } from '@/generated/gql/graphql';
 import ConfirmationAlert, { alertProps } from './confirmationModal';
 import {
@@ -40,7 +40,7 @@ import {
   DeleteIcon,
   EditIcon,
   InfoOutlineIcon,
-  ViewIcon,
+  ViewIcon
 } from '@chakra-ui/icons';
 import EditBook from './edit-book';
 
@@ -51,7 +51,7 @@ interface BookPostProps extends BookCardProps {
 export default function BookPost({
   book,
   width = 30,
-  secondaryContent = true,
+  secondaryContent = true
 }: BookPostProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const reservers =
@@ -61,12 +61,12 @@ export default function BookPost({
   const {
     isOpen: isOpenAlert,
     onOpen: onOpenAlert,
-    onClose: onCloseAlert,
+    onClose: onCloseAlert
   } = useDisclosure();
   const {
     isOpen: isOpenBorrowAlert,
     onOpen: onOpenBorrowAlert,
-    onClose: onCloseBorrowAlert,
+    onClose: onCloseBorrowAlert
   } = useDisclosure();
 
   const { data: user } = useQuery(CurrentUserDocument);
@@ -75,7 +75,7 @@ export default function BookPost({
     refetchQueries: [{ query: GetBooksDocument }],
     onError: (error) => {
       setError(error.graphQLErrors[0].message);
-    },
+    }
   });
 
   const toast = useToast();
@@ -94,7 +94,7 @@ export default function BookPost({
         title: 'Book deleted successfully!',
         status: 'success',
         duration: 2000,
-        isClosable: true,
+        isClosable: true
       });
     }
   }, [data]);
@@ -257,7 +257,7 @@ function BorrowBookResponse({
   book,
   isOpen,
   onOpen,
-  onClose,
+  onClose
 }: BorrowBookResponseProps) {
   const cancelRef = useRef(null);
   let message: string = '';
@@ -266,7 +266,7 @@ function BorrowBookResponse({
     useMutation(Borrow_BookDocument);
   const [
     reserveBook,
-    { data: reserveData, loading: reserveLoading, error: reserveError },
+    { data: reserveData, loading: reserveLoading, error: reserveError }
   ] = useMutation(Reserve_BookDocument);
 
   const toast = useToast();
@@ -276,14 +276,14 @@ function BorrowBookResponse({
   const handleBorrow = async () => {
     await borrowBook({
       variables: { borrowId: book.id },
-      refetchQueries: [{ query: GetBooksDocument }],
+      refetchQueries: [{ query: GetBooksDocument }]
     });
     toast({
       position: 'top',
       title: data?.borrow.message,
       status: 'success',
       duration: 2000,
-      isClosable: true,
+      isClosable: true
     });
     onClose();
   };
@@ -291,14 +291,14 @@ function BorrowBookResponse({
   const handleReservation = async () => {
     await reserveBook({
       variables: { reserveId: book.id },
-      refetchQueries: [{ query: GetBooksDocument }],
+      refetchQueries: [{ query: GetBooksDocument }]
     });
     toast({
       position: 'top',
       title: reserveData?.reserve.message,
       status: 'success',
       duration: 2000,
-      isClosable: true,
+      isClosable: true
     });
     onClose();
   };

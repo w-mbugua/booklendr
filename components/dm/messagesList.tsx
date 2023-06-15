@@ -1,7 +1,7 @@
 import {
   CurrentUserQuery,
   MessageSentDocument,
-  MessagesDocument,
+  MessagesDocument
 } from '@/generated/gql/graphql';
 import { useQuery } from '@apollo/client';
 import { Alert, AlertIcon, CircularProgress, Flex } from '@chakra-ui/react';
@@ -10,13 +10,13 @@ import { useEffect } from 'react';
 
 export default function MessageList({
   conversationId,
-  user,
+  user
 }: {
   conversationId: number;
   user: CurrentUserQuery['currentUser'];
 }) {
   const { data, error, loading, subscribeToMore } = useQuery(MessagesDocument, {
-    variables: { conversationId },
+    variables: { conversationId }
   });
 
   const subscribeToMoreMessages = () =>
@@ -30,9 +30,9 @@ export default function MessageList({
           messages:
             newItem.sender.id === user.id
               ? prev.messages
-              : [newItem, ...prev.messages],
+              : [newItem, ...prev.messages]
         });
-      },
+      }
     });
 
   useEffect(() => {

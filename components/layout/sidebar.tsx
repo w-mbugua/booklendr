@@ -5,7 +5,7 @@ import {
   Divider,
   Stack,
   Text,
-  useDisclosure,
+  useDisclosure
 } from '@chakra-ui/react';
 import Logo from '../logo';
 import { Icon } from '@chakra-ui/react';
@@ -13,14 +13,14 @@ import {
   HomeIcon,
   BookOpenIcon,
   BellAlertIcon,
-  ArrowLeftOnRectangleIcon,
+  ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/solid';
 import useAuth from '@/hooks/useAuth';
 import { startCase } from 'lodash';
 import { useApolloClient, useMutation } from '@apollo/client';
 import {
   LogoutDocument,
-  ReadNotificationsDocument,
+  ReadNotificationsDocument
 } from '@/generated/gql/graphql';
 import { useRouter } from 'next/router';
 import NotificationBadge from './notifications';

@@ -12,7 +12,7 @@ export default function NavButton({ children }: { children: React.ReactNode }) {
         borderRadius: '0.375rem',
         backgroundColor: 'primaries.yellow',
         color: 'primaries.white',
-        border: 'none',
+        border: 'none'
       }}
     >
       {children}

@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['books.google.com', 'res.cloudinary.com'],
-  },
+    domains: ['books.google.com', 'res.cloudinary.com']
+  }
 };
 
 module.exports = nextConfig;

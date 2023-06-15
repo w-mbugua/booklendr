@@ -1,5 +1,6 @@
 .cache
 node_modules/
+.next/
 public/
 package.json
 package-lock.json

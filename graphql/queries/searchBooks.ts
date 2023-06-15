@@ -5,7 +5,7 @@ const SEARCH_BOOKS = graphql(`
     searchBook(searchTerm: $searchTerm) {
       id
       title
-	  cover
+      cover
     }
   }
 `);

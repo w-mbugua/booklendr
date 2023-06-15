@@ -39,18 +39,18 @@ describe('Pagepals', () => {
     });
 
     it('should display error if any field is empty', function () {
-      cy.get('#book-title').type('test book')
-      cy.get('#new-book-btn').click()
+      cy.get('#book-title').type('test book');
+      cy.get('#new-book-btn').click();
 
-      cy.get('#author-error').should('contain.text', 'Author is required')
-      cy.get('#tag-error').should('contain.text', 'Book category is required')
-    })
+      cy.get('#author-error').should('contain.text', 'Author is required');
+      cy.get('#tag-error').should('contain.text', 'Book category is required');
+    });
 
     it('a new book can be added', function () {
-      cy.get('#book-title').type('the pragmatic programmer')
-      cy.get('#author').type('andrew hunt')
-      cy.get('#tag').type('software engineering')
-      cy.get('#new-book-btn').click()
+      cy.get('#book-title').type('the pragmatic programmer');
+      cy.get('#author').type('andrew hunt');
+      cy.get('#tag').type('software engineering');
+      cy.get('#new-book-btn').click();
       cy.get('#book-post').contains('The Pragmatic Programmer');
       cy.get('#book-post').contains('View More').click();
     });

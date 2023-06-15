@@ -10,7 +10,7 @@ const CONVERSATIONS = graphql(`
         ...messageFields
       }
       messages {
-       ...messageFields
+        ...messageFields
       }
       participants {
         userId

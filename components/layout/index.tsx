@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Flex direction="column" height="100%">
       <Header />
       <Flex width="100%">
-        <Box width='100%'>{children}</Box>
+        <Box width="100%">{children}</Box>
       </Flex>
     </Flex>
   );

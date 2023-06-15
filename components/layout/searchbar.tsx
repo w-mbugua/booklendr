@@ -1,7 +1,7 @@
 import {
   Book,
   Search_BooksDocument,
-  Search_BooksQuery,
+  Search_BooksQuery
 } from '@/generated/gql/graphql';
 import { useLazyQuery } from '@apollo/client';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -18,7 +18,7 @@ export default function SearchBar() {
   const [searchBooks, { data, loading, error }] = useLazyQuery(
     Search_BooksDocument,
     {
-      fetchPolicy: 'no-cache',
+      fetchPolicy: 'no-cache'
     }
   );
   const items: SearchBook = data?.searchBook || [];
@@ -36,12 +36,12 @@ export default function SearchBar() {
     getInputProps,
     getMenuProps,
     getToggleButtonProps,
-    highlightedIndex,
+    highlightedIndex
   } = useCombobox({
     items,
     onSelectedItemChange({ selectedItem }) {
       console.log('SELECTED!', selectedItem);
-    },
+    }
   });
   return (
     <InputGroup borderColor="primaries.yellow">
@@ -55,7 +55,7 @@ export default function SearchBar() {
 
             setInputValue((event.target as HTMLInputElement).value);
           },
-          id: 'search-books',
+          id: 'search-books'
         })}
       />
       <InputRightElement>
@@ -68,7 +68,7 @@ export default function SearchBar() {
           maxHeight: '280px',
           width: '280px',
           marginTop: '42px',
-          display: isOpen && items.length ? 'block' : 'none',
+          display: isOpen && items.length ? 'block' : 'none'
         }}
         {...getMenuProps()}
       >
@@ -86,7 +86,7 @@ export default function SearchBar() {
                 paddingTop: '5px',
                 display: 'grid',
                 gridTemplateColumns: 'auto 1fr',
-                gap: '2em',
+                gap: '2em'
               }}
             >
               <Image

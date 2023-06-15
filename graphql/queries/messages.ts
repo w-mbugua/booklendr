@@ -4,7 +4,7 @@ const MESSAGES = graphql(`
   query Messages($conversationId: Float!) {
     messages(conversationId: $conversationId) {
       id
-	  createdAt
+      createdAt
       conversation {
         id
       }

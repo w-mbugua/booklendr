@@ -14,7 +14,7 @@ export default function BookPage() {
     variables: { BookId: Number(id) },
     onError: (error) => {
       setErrorMsg(error.graphQLErrors[0].message);
-    },
+    }
   });
   const [errorMsg, setErrorMsg] = useState('');
 

@@ -6,10 +6,10 @@ const CONVERSATION_UPDATED = graphql(`
       id
       createdAt
       updatedAt
-	  messages {
-		id
-		body
-	  }
+      messages {
+        id
+        body
+      }
       latestMessage {
         ...messageFields
       }

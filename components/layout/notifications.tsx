@@ -1,31 +1,22 @@
 import {
   CurrentUserDocument,
-  CurrentUserQuery,
   NotificationsDocument,
-  ReadNotificationsDocument,
+  ReadNotificationsDocument
 } from '@/generated/gql/graphql';
-import { useMutation, useQuery, useSubscription } from '@apollo/client';
-import {
-  Badge,
-  Box,
-  Button,
-  Icon,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
-import { BellAlertIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import { Button, useDisclosure } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import MessageNotifications from '../notifications/message-notifications';
 
-export default function NotificationBadge() {
+export default function NotificationBadge({ pad = 0 }: { pad?: number }) {
   const { data, error, loading, subscribeToMore } =
     useQuery(CurrentUserDocument);
   const [readNotifications] = useMutation(ReadNotificationsDocument);
   const {
     isOpen: isOpenNotifications,
     onOpen,
-    onClose: onCloseNotifictions,
+    onClose: onCloseNotifictions
   } = useDisclosure();
 
   const onOpenNotifications = () => {
@@ -50,7 +41,7 @@ export default function NotificationBadge() {
         const newData = subscriptionData.data.newNotification;
 
         return Object.assign({}, prev, newData);
-      },
+      }
     });
 
   useEffect(() => {
@@ -66,18 +57,13 @@ export default function NotificationBadge() {
         onClick={onOpenNotifications}
         display="flex"
         justifyContent="start"
-        fontWeight='normal'
-        padding={6}
-
+        fontWeight="normal"
+        padding={pad}
       >
         Messages
-        {data?.currentUser && (
-          <>
-            {Number(data?.currentUser.unreadMessages) > 0
-              ? ` (${data?.currentUser.unreadMessages})`
-              : ''}
-          </>
-        )}
+        {data?.currentUser && Number(data.currentUser.unreadMessages) > 0
+          ? ` (${data.currentUser.unreadMessages})`
+          : ''}
       </Button>
       {data?.currentUser && (
         <MessageNotifications

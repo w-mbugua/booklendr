@@ -7,12 +7,12 @@ import {
   useColorModeValue,
   Grid,
   GridItem,
-  Button,
+  Button
 } from '@chakra-ui/react';
 import {
   Book,
   CurrentUserDocument,
-  GetBooksQuery,
+  GetBooksQuery
 } from '@/generated/gql/graphql';
 import moment from 'moment';
 import Image from 'next/image';

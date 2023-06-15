@@ -5,7 +5,7 @@ import {
   CurrentUserDocument,
   GetBooksByOwnerDocument,
   GetBooksDocument,
-  Get_Loans_By_IdDocument,
+  Get_Loans_By_IdDocument
 } from '@/generated/gql/graphql';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import {
@@ -16,7 +16,7 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Text,
+  Text
 } from '@chakra-ui/react';
 import BorroweredBooks from '@/components/profile/borrowedBooks';
 import ReservedBooks from '@/components/profile/reservations';
@@ -34,7 +34,7 @@ export default function UserProfile() {
 
   const { data, loading, error } = useQuery(GetBooksByOwnerDocument, {
     variables: { ownerId: Number(id) },
-    skip: !id,
+    skip: !id
   });
 
   return (

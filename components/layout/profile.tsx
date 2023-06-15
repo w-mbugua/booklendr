@@ -1,5 +1,6 @@
 import { LogoutDocument } from '@/generated/gql/graphql';
 import useAuth from '@/hooks/useAuth';
+import useLogout from '@/hooks/useLogout';
 import { useMutation, useApolloClient } from '@apollo/client';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
@@ -9,7 +10,7 @@ import {
   Menu,
   MenuButton,
   MenuItem,
-  MenuList,
+  MenuList
 } from '@chakra-ui/react';
 import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
 import { capitalize } from 'lodash';
@@ -17,17 +18,7 @@ import { useRouter } from 'next/router';
 
 export default function ProfileHeader() {
   const { currentUser } = useAuth();
-  const [logout, { error, data }] = useMutation(LogoutDocument);
-  const apollo = useApolloClient();
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    logout();
-    if (!error) {
-      await apollo.clearStore();
-    }
-    router.push('/login');
-  };
+  const { logout } = useLogout();
 
   return (
     <Box pl={8}>
@@ -43,7 +34,7 @@ export default function ProfileHeader() {
         </MenuButton>
         <MenuList>
           <MenuItem>Profile</MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem onClick={logout}>Logout</MenuItem>
         </MenuList>
       </Menu>
     </Box>

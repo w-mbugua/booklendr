@@ -8,7 +8,7 @@ import {
   Stack,
   FormControl,
   FormErrorMessage,
-  FormLabel,
+  FormLabel
 } from '@chakra-ui/react';
 import { Link } from '@chakra-ui/next-js';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
@@ -42,7 +42,7 @@ function Register() {
     phone: Yup.string().min(3),
     password: Yup.string()
       .min(6, 'Password must be longer than 6 characters')
-      .required('Password is required'),
+      .required('Password is required')
   });
 
   const formik = useFormik({
@@ -50,13 +50,13 @@ function Register() {
       username: '',
       email: '',
       phoneNumber: '',
-      password: '',
+      password: ''
     },
     validationSchema,
     onSubmit: async (values) => {
       console.log(values);
       await register({ variables: { newMemberData: values } });
-    },
+    }
   });
 
   return (

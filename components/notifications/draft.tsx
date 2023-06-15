@@ -17,7 +17,7 @@ export default function ConversationItem({
   conversation,
   selectedConversationId,
   hasSeenLatestMessage,
-  onClick,
+  onClick
 }: ConversationItemProps) {
   const handleClick = (event: React.MouseEvent) => {};
 

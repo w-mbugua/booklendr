@@ -5,7 +5,11 @@ import { Get_Loans_By_IdQuery } from '@/generated/gql/graphql';
 interface BorrowerDetailsProps extends ModalProps {
   user: Get_Loans_By_IdQuery['loansByLenderId'][0]['borrower'];
 }
-export default function BorrowerDetails({ user, isOpen, onClose }: BorrowerDetailsProps) {
+export default function BorrowerDetails({
+  user,
+  isOpen,
+  onClose
+}: BorrowerDetailsProps) {
   return (
     <MainModal isOpen={isOpen} onClose={onClose} isCentered>
       <Stack spacing={3}>

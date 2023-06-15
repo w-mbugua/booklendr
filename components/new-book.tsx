@@ -2,7 +2,7 @@ import MainModal from '@/components/modal';
 import {
   AddBookDocument,
   GetBooksDocument,
-  GetBooksQuery,
+  GetBooksQuery
 } from '@/generated/gql/graphql';
 import { useMutation } from '@apollo/client';
 import { AddIcon } from '@chakra-ui/icons';
@@ -15,7 +15,7 @@ import {
   Input,
   Text,
   useDisclosure,
-  useToast,
+  useToast
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
@@ -24,7 +24,7 @@ import * as Yup from 'yup';
 const bookSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
   author: Yup.string().required('Author is required'),
-  tag: Yup.string().required('Book category is required'),
+  tag: Yup.string().required('Book category is required')
 });
 
 export default function NewBook() {
@@ -34,7 +34,7 @@ export default function NewBook() {
     refetchQueries: [{ query: GetBooksDocument }],
     onError: (error) => {
       setError(error.graphQLErrors[0].message);
-    },
+    }
     // update: (cache, response) => {
     //   cache.updateQuery({ query: GetBooksDocument }, (res) => {
     //     return {
@@ -54,7 +54,7 @@ export default function NewBook() {
         title: 'Book successfully added!',
         status: 'success',
         duration: 2000,
-        isClosable: true,
+        isClosable: true
       });
       onClose();
     }
@@ -64,12 +64,12 @@ export default function NewBook() {
     initialValues: {
       title: '',
       author: '',
-      tag: '',
+      tag: ''
     },
     validationSchema: bookSchema,
     onSubmit: async (values) => {
       await addBook({ variables: { newBookData: values } });
-    },
+    }
   });
 
   return (
@@ -84,7 +84,7 @@ export default function NewBook() {
         _hover={{
           backgroundColor: 'primaries.yellow',
           color: 'primaries.white',
-          border: 'none',
+          border: 'none'
         }}
       >
         New Book

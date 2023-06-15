@@ -3,7 +3,7 @@ import {
   AddBookDocument,
   GetBooksDocument,
   GetBooksQuery,
-  UpdateBookDocument,
+  UpdateBookDocument
 } from '@/generated/gql/graphql';
 import { useMutation } from '@apollo/client';
 import { AddIcon, EditIcon } from '@chakra-ui/icons';
@@ -19,7 +19,7 @@ import {
   Textarea,
   Tooltip,
   useDisclosure,
-  useToast,
+  useToast
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
@@ -42,7 +42,7 @@ const bookSchema = Yup.object().shape({
       'format',
       'File type not supported.\n Upload either jpeg or png file.',
       (value) => !value || ['image/jpeg', 'image/png'].includes(value.type)
-    ),
+    )
 });
 
 export default function EditBook({ book }: BookCardProps) {
@@ -52,7 +52,7 @@ export default function EditBook({ book }: BookCardProps) {
     refetchQueries: [{ query: GetBooksDocument }],
     onError: (error) => {
       setError(error.graphQLErrors[0].message);
-    },
+    }
   });
   const toast = useToast();
 
@@ -65,7 +65,7 @@ export default function EditBook({ book }: BookCardProps) {
         title: 'Book successfully updated!',
         status: 'success',
         duration: 2000,
-        isClosable: true,
+        isClosable: true
       });
       onClose();
     }
@@ -85,15 +85,15 @@ export default function EditBook({ book }: BookCardProps) {
       subtitle: book.subtitle,
       description: book.description,
       author: book.author.name,
-      cover: null,
+      cover: null
     } as valueProps,
     validationSchema: bookSchema,
     onSubmit: async (values) => {
       const { cover, ...others } = values;
       await updateBook({
-        variables: { options: { ...others, id: book.id }, cover },
+        variables: { options: { ...others, id: book.id }, cover }
       });
-    },
+    }
   });
 
   return (

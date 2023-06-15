@@ -6,7 +6,7 @@ import {
   Book,
   GetBooksDocument,
   GetBooksQuery,
-  GetTagsDocument,
+  GetTagsDocument
 } from '@/generated/gql/graphql';
 import { useQuery } from '@apollo/client';
 import {
@@ -18,7 +18,7 @@ import {
   Stack,
   Tag,
   TagLabel,
-  Text,
+  Text
 } from '@chakra-ui/react';
 import { size } from 'lodash';
 import { useEffect, useState } from 'react';
@@ -48,9 +48,11 @@ export default function Home() {
     <Layout>
       <Flex mt="4" ml={4} gap="4em" width="100%">
         <Box height="100%">
-          <Box>
-            <SearchBar />
-          </Box>
+          {!!books.length && (
+            <Box>
+              <SearchBar />
+            </Box>
+          )}
           <br />
           {!!tagsData?.getTags.length && (
             <Box
@@ -77,7 +79,7 @@ export default function Home() {
                     cursor="pointer"
                     _hover={{
                       background: 'primaries.olive',
-                      color: 'white',
+                      color: 'white'
                     }}
                   >
                     All
@@ -91,7 +93,7 @@ export default function Home() {
                       value={tag.name}
                       _hover={{
                         background: 'primaries.olive',
-                        color: 'white',
+                        color: 'white'
                       }}
                     >
                       {tag.name}
@@ -115,7 +117,7 @@ export default function Home() {
               ))}
             </Flex>
           ) : (
-            <Text>No books found.</Text>
+            <Text align="center">No books found.</Text>
           )}
         </Box>
       </Flex>

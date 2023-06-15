@@ -5,7 +5,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  Button,
+  Button
 } from '@chakra-ui/react';
 import { startCase } from 'lodash';
 import React from 'react';
@@ -24,7 +24,7 @@ export default function ConfirmationAlert({
   action,
   isOpen,
   onOpen,
-  onClose,
+  onClose
 }: ConfirmationAlertProps) {
   const cancelRef = React.useRef(null);
 

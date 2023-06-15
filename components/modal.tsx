@@ -6,7 +6,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  ModalOverlay
 } from '@chakra-ui/react';
 import { MutableRefObject } from 'react';
 
@@ -38,7 +38,7 @@ export default function MainModal({
   header,
   initialRef,
   size = 'md',
-  isCentered = false,
+  isCentered = false
 }: ModalProps) {
   return (
     <>

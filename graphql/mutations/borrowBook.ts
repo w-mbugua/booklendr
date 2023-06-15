@@ -6,7 +6,7 @@ const BORROW_BOOK = graphql(`
       message
       book {
         title
-		status
+        status
         loans {
           status
           returnDate

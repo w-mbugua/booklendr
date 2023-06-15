@@ -2,7 +2,7 @@ import {
   CurrentUserQuery,
   MessagesDocument,
   MessagesQuery,
-  SendMessageDocument,
+  SendMessageDocument
 } from '@/generated/gql/graphql';
 import { useMutation } from '@apollo/client';
 import { Input, Text } from '@chakra-ui/react';
@@ -16,7 +16,7 @@ interface MessageInputProps {
 
 export default function MessageInput({
   conversationId,
-  sender,
+  sender
 }: MessageInputProps) {
   const [message, setMessage] = useState('');
   const [sendMessage, { error, loading }] = useMutation(SendMessageDocument);
@@ -26,19 +26,19 @@ export default function MessageInput({
     try {
       await sendMessage({
         variables: {
-          messageData: { body: message, sender: sender.id, conversationId },
+          messageData: { body: message, sender: sender.id, conversationId }
         },
         optimisticResponse: {
           sendMessage: {
             __typename: 'Message',
             body: message,
             id: Math.random() * 10001
-          },
+          }
         },
         update: (cache) => {
           const existing = cache.readQuery({
             query: MessagesDocument,
-            variables: { conversationId },
+            variables: { conversationId }
           }) as MessagesQuery;
           const newMessage = {
             body: message,
@@ -46,20 +46,17 @@ export default function MessageInput({
             conversation: conversationId,
             sender,
             createdAt: new Date(Date.now()),
-            updatedAt: new Date(Date.now()),
-          }
+            updatedAt: new Date(Date.now())
+          };
           cache.writeQuery({
             query: MessagesDocument,
             variables: { conversationId },
             data: {
               ...existing, // all other keys,
-              messages: [
-                newMessage,
-                ...existing.messages,
-              ],
-            },
+              messages: [newMessage, ...existing.messages]
+            }
           });
-        },
+        }
       });
     } catch (err: any) {
       toast.error('Failed to send message ', err.message);
