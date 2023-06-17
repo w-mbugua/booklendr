@@ -30,7 +30,7 @@ const bookSchema = Yup.object().shape({
 export default function NewBook() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [error, setError] = useState('');
-  const [addBook, { data, loading }] = useMutation(AddBookDocument, {
+  const [addBook, { data, loading, reset }] = useMutation(AddBookDocument, {
     refetchQueries: [{ query: GetBooksDocument }],
     onError: (error) => {
       setError(error.graphQLErrors[0].message);
@@ -47,8 +47,13 @@ export default function NewBook() {
 
   const initialRef = React.useRef(null);
 
+  console.log('DATA', data);
+  const handleClose = () => {
+    onClose();
+    reset();
+  };
   useEffect(() => {
-    if (!loading && data) {
+    if (data && !data.addBook.message) {
       toast({
         position: 'top',
         title: 'Book successfully added!',
@@ -56,7 +61,18 @@ export default function NewBook() {
         duration: 2000,
         isClosable: true
       });
-      onClose();
+      handleClose();
+    }
+    if (data?.addBook.message === 'book not found') {
+      toast({
+        position: 'bottom-right',
+        title:
+          'A book with that author was not found ;( in case of a mismatch please edit the book with the correct details',
+        status: 'warning',
+        duration: 6000,
+        isClosable: true
+      });
+      handleClose();
     }
   }, [data, loading, onClose]);
 

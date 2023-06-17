@@ -10,6 +10,7 @@ import {
 import { useQuery } from '@apollo/client';
 import {
   Box,
+  CircularProgress,
   Divider,
   Flex,
   HStack,
@@ -101,19 +102,23 @@ export default function Home() {
             </Box>
           )}
         </Box>
-        <Box w="100%" h='100%' justifyContent="center" bg={books?.length ? "white" : 'inherit'} p={6}>
+        <Box
+          w="100%"
+          h="100%"
+          justifyContent="center"
+          bg={books?.length ? 'white' : 'inherit'}
+          p={6}
+        >
           <HStack width="90%" justifyContent="end">
             <NewBook />
           </HStack>
           {books.length ? (
             <Flex gap="20px" direction="column" flexWrap="wrap">
               {books.map((book, idx) => (
-                <>
-                  <BookCard key={book.id} book={book} />
-                  {books.length > 1 && idx < books.length - 1 && (
-                    <Divider />
-                  )}
-                </>
+                <Box key={book.id}>
+                  <BookCard book={book} />
+                  {books.length > 1 && idx < books.length - 1 && <Divider />}
+                </Box>
                 /* 
                                 <Box minWidth="300px" key={book.id} width="30%">
                                     <BookPost book={book} width={100} />
@@ -122,7 +127,19 @@ export default function Home() {
               ))}
             </Flex>
           ) : (
-            <Text align="center">No books found.</Text>
+            <>
+              {loading ? (
+                <Flex justifyContent="center" alignItems="center">
+                  <CircularProgress
+                    isIndeterminate
+                    color="primaries.olive"
+                    thickness="12px"
+                  />
+                </Flex>
+              ) : (
+                <Text align="center">No books found.</Text>
+              )}
+            </>
           )}
         </Box>
       </Flex>

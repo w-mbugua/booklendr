@@ -4,7 +4,10 @@ import { BookFieldsFragmentDoc } from '@/generated/gql/graphql';
 const addBook = graphql(`
   mutation AddBook($newBookData: NewBookInput!) {
     addBook(newBookData: $newBookData) {
-      ...bookFields
+      book {
+        ...bookFields
+      }
+      message
     }
   }
 `);

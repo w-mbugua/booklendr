@@ -223,7 +223,7 @@ export default function EditBook({ book }: { book: Book }) {
                   name="description"
                   id="book-description"
                   size="sm"
-                  height="lg"
+                  height="sm"
                   value={formik.values.description}
                   onChange={formik.handleChange}
                   isInvalid={
