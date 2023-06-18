@@ -45,7 +45,7 @@ export default function Home() {
 
   return (
     <Layout>
-      <Flex mt="4" ml={4} gap="4em" width="100%">
+      <Flex mt="4" ml={4} gap="4em">
         <Box height="100%" minWidth="20%">
           {/* {!!books.length && (
             <Box>
@@ -59,7 +59,7 @@ export default function Home() {
               bg="white"
               boxShadow="lg"
               borderRadius="20px"
-              padding={2}
+              padding={6}
               minH="500px"
               justifyContent="center"
             >

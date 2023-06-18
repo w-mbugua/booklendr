@@ -1,4 +1,4 @@
-import BookPost from '@/components/book-post';
+import BookPost from '@/components/book/book-post';
 import Layout from '@/components/layout';
 import { useEffect, useState } from 'react';
 import {
@@ -72,29 +72,26 @@ export default function UserProfile() {
                 transform={{ base: 'translate(0%, -50%)', md: '' }}
               >
                 <TabList border="none" color="white" bg="primaries.yellow">
-                  <Tab>Profile</Tab>
+                  <Tab>My Shelf</Tab>
                   <Tab>Borrowed</Tab>
                   <Tab>Reserved</Tab>
                 </TabList>
               </Box>
             </Box>
-            <Box bg="white">
+            <Box>
               <TabPanels>
                 <TabPanel>
                   <Box display="flex" justifyContent="center">
                     {data && (
                       <Box maxWidth="100%">
                         {data?.getBooksByOwner.length ? (
-                          <Box w="100%" display="flex" flexWrap="wrap">
+                          <Flex w="100%" flexWrap="wrap" gap="10px">
                             {data?.getBooksByOwner.map((book) => (
-                              <BookPost
-                                key={book.id}
-                                book={book}
-                                width={100}
-                                secondaryContent={false}
-                              />
+                              <Box minWidth="300px" key={book.id} width="30%">
+                                <BookPost book={book} width={100} />
+                              </Box>
                             ))}
-                          </Box>
+                          </Flex>
                         ) : (
                           <Text>No books found.</Text>
                         )}
