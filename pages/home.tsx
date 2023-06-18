@@ -10,6 +10,7 @@ import {
 import { useQuery } from '@apollo/client';
 import {
   Box,
+  Button,
   CircularProgress,
   Divider,
   Flex,
@@ -45,13 +46,13 @@ export default function Home() {
   return (
     <Layout>
       <Flex mt="4" ml={4} gap="4em" width="100%">
-        <Box height="100%">
-          {!!books.length && (
+        <Box height="100%" minWidth="20%">
+          {/* {!!books.length && (
             <Box>
               <SearchBar />
             </Box>
           )}
-          <br />
+          <br /> */}
           {!!tagsData?.getTags.length && (
             <Box
               flexWrap="wrap"
@@ -62,9 +63,33 @@ export default function Home() {
               minH="500px"
               justifyContent="center"
             >
-              <Text as="h3" textAlign="center">
+              <Text fontStyle="md" fontWeight="bold" textAlign="left">
                 Topic
               </Text>
+              <Text fontSize="sm">
+                {selectedTag === 'all'
+                  ? 'Showing all books'
+                  : `showing ${books.length} result${
+                      books.length === 1 ? '' : 's'
+                    }`}
+              </Text>
+              <br />
+
+              <Flex gap="5px">
+                <Text fontStyle="md" fontWeight="bold" textAlign="left">
+                  Select Topic
+                </Text>
+                {/* <Text
+                  borderBottom="1px solid"
+                  borderColor="primaries.yellow"
+                  color="primaries.yellow"
+                  cursor='pointer'
+                  fontSize="xs"
+                  alignSelf="flex-end"
+                >
+                  {selectedTag === 'all' && 'select all'}
+                </Text> */}
+              </Flex>
               <RadioGroup
                 onChange={(val) => setSelectedTag(val)}
                 value={selectedTag}
@@ -120,10 +145,10 @@ export default function Home() {
                   {books.length > 1 && idx < books.length - 1 && <Divider />}
                 </Box>
                 /* 
-                                <Box minWidth="300px" key={book.id} width="30%">
-                                    <BookPost book={book} width={100} />
-                                </Box>
-                                 */
+                   <Box minWidth="300px" key={book.id} width="30%">
+                      <BookPost book={book} width={100} />
+                     </Box>
+                */
               ))}
             </Flex>
           ) : (

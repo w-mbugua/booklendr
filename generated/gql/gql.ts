@@ -30,7 +30,7 @@ const documents = {
     "\n  mutation Register($newMemberData: NewMemberInput!) {\n    register(newMemberData: $newMemberData) {\n      member {\n        username\n        phoneNumber\n        email\n        id\n      }\n      error {\n        message\n        field\n      }\n    }\n  }\n": types.RegisterDocument,
     "\n  mutation RESERVE_BOOK($reserveId: Float!) {\n    reserve(id: $reserveId) {\n      message\n      book {\n        loans {\n          borrower {\n            username\n          }\n        }\n        reservations {\n          reserver {\n            username\n          }\n          status\n        }\n      }\n    }\n  }\n": types.Reserve_BookDocument,
     "\n  mutation sendMessage($messageData: MessageInput!) {\n    sendMessage(messageData: $messageData) {\n      body\n      id\n    }\n  }\n": types.SendMessageDocument,
-    "\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      ...bookFields\n    }\n  }\n": types.UpdateBookDocument,
+    "\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      book {\n        ...bookFields\n      }\n      message\n    }\n  }\n": types.UpdateBookDocument,
     "\n  query conversations {\n    conversations {\n      id\n      createdAt\n      updatedAt\n      latestMessage {\n        ...messageFields\n      }\n      messages {\n        ...messageFields\n      }\n      participants {\n        userId\n        hasSeenLatestMessage\n        id\n      }\n    }\n  }\n": types.ConversationsDocument,
     "\n  query CurrentUser {\n    currentUser {\n      ...userFields\n    }\n  }\n": types.CurrentUserDocument,
     "\n  query GetBookById($BookId: Float!) {\n    getBookById(id: $BookId) {\n      ...bookFields\n    }\n  }\n": types.GetBookByIdDocument,
@@ -132,7 +132,7 @@ export function graphql(source: "\n  mutation sendMessage($messageData: MessageI
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      ...bookFields\n    }\n  }\n"): (typeof documents)["\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      ...bookFields\n    }\n  }\n"];
+export function graphql(source: "\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      book {\n        ...bookFields\n      }\n      message\n    }\n  }\n"): (typeof documents)["\n  mutation updateBook($options: BookUpdateInput!, $cover: Upload) {\n    updateBook(options: $options, cover: $cover) {\n      book {\n        ...bookFields\n      }\n      message\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

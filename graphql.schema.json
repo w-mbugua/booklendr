@@ -433,13 +433,9 @@
             "name": "subtitle",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -1864,7 +1860,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "Book",
+                "name": "BookResponse",
                 "ofType": null
               }
             },

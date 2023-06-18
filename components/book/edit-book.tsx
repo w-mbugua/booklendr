@@ -60,7 +60,7 @@ export default function EditBook({ book }: { book: Book }) {
     refetchQueries: [{ query: GetBooksDocument }],
     onError: (error) => {
       setError(error.graphQLErrors[0].message);
-      formik.setErrors({ subtitle: error.graphQLErrors[0].message })
+      formik.setErrors({ subtitle: error.graphQLErrors[0].message });
     }
   });
   const toast = useToast();
@@ -105,17 +105,23 @@ export default function EditBook({ book }: { book: Book }) {
     }
   });
 
-
   return (
     <>
-      <Button variant="solid" size={'sm'} fontWeight="normal"
-        backgroundColor='primaries.olive' color='white' _hover={{
+      <Button
+        variant="solid"
+        size={'sm'}
+        fontWeight="normal"
+        backgroundColor="primaries.olive"
+        color="white"
+        _hover={{
           bg: 'primaries.olive',
           color: 'white'
-        }} onClick={onOpen}>
+        }}
+        onClick={onOpen}
+      >
         Edit
       </Button>
-      <Drawer isOpen={isOpen} onClose={onClose} size='md'>
+      <Drawer isOpen={isOpen} onClose={onClose} size="md">
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
@@ -125,7 +131,7 @@ export default function EditBook({ book }: { book: Book }) {
             <Text fontSize="sm" color="red">
               {error}
             </Text>
-            <form onSubmit={formik.handleSubmit} id='edit-book'>
+            <form onSubmit={formik.handleSubmit} id="edit-book">
               <FormControl
                 m={4}
                 isInvalid={formik.touched.title && Boolean(formik.errors.title)}
@@ -138,9 +144,15 @@ export default function EditBook({ book }: { book: Book }) {
                   size="lg"
                   ref={initialRef}
                   onChange={formik.handleChange}
-                  isInvalid={formik.touched.title && Boolean(formik.errors.title)}
+                  isInvalid={
+                    formik.touched.title && Boolean(formik.errors.title)
+                  }
                 />
-                <FormErrorMessage id="title-error" fontSize="xs" color="red.600">
+                <FormErrorMessage
+                  id="title-error"
+                  fontSize="xs"
+                  color="red.600"
+                >
                   {formik.errors.title}
                 </FormErrorMessage>
               </FormControl>
@@ -161,14 +173,20 @@ export default function EditBook({ book }: { book: Book }) {
                     formik.touched.subtitle && Boolean(formik.errors.subtitle)
                   }
                 />
-                <FormErrorMessage id="subtitle-error" fontSize="xs" color="red.600">
+                <FormErrorMessage
+                  id="subtitle-error"
+                  fontSize="xs"
+                  color="red.600"
+                >
                   {formik.errors.subtitle}
                 </FormErrorMessage>
               </FormControl>
 
               <FormControl
                 m={4}
-                isInvalid={formik.touched.author && Boolean(formik.errors.author)}
+                isInvalid={
+                  formik.touched.author && Boolean(formik.errors.author)
+                }
               >
                 <FormLabel>Author</FormLabel>
                 <Input
@@ -177,9 +195,15 @@ export default function EditBook({ book }: { book: Book }) {
                   id="author"
                   size="lg"
                   onChange={formik.handleChange}
-                  isInvalid={formik.touched.author && Boolean(formik.errors.author)}
+                  isInvalid={
+                    formik.touched.author && Boolean(formik.errors.author)
+                  }
                 />
-                <FormErrorMessage id="author-error" fontSize="xs" color="red.600">
+                <FormErrorMessage
+                  id="author-error"
+                  fontSize="xs"
+                  color="red.600"
+                >
                   {formik.errors.author}
                 </FormErrorMessage>
               </FormControl>
@@ -206,15 +230,22 @@ export default function EditBook({ book }: { book: Book }) {
                         : null
                     );
                   }}
-                  isInvalid={formik.touched.cover && Boolean(formik.errors.cover)}
+                  isInvalid={
+                    formik.touched.cover && Boolean(formik.errors.cover)
+                  }
                 />
-                <FormErrorMessage id="cover-error" fontSize="xs" color="red.600">
+                <FormErrorMessage
+                  id="cover-error"
+                  fontSize="xs"
+                  color="red.600"
+                >
                   {formik.errors.cover}
                 </FormErrorMessage>
               </FormControl>
               <FormControl
                 isInvalid={
-                  formik.touched.description && Boolean(formik.errors.description)
+                  formik.touched.description &&
+                  Boolean(formik.errors.description)
                 }
                 m={4}
               >
@@ -227,7 +258,8 @@ export default function EditBook({ book }: { book: Book }) {
                   value={formik.values.description}
                   onChange={formik.handleChange}
                   isInvalid={
-                    formik.touched.description && Boolean(formik.errors.description)
+                    formik.touched.description &&
+                    Boolean(formik.errors.description)
                   }
                 />
                 <FormErrorMessage
@@ -238,7 +270,6 @@ export default function EditBook({ book }: { book: Book }) {
                   {formik.errors.description}
                 </FormErrorMessage>
               </FormControl>
-
             </form>
           </DrawerBody>
 
@@ -251,12 +282,12 @@ export default function EditBook({ book }: { book: Book }) {
                 background="primaries.yellow"
                 color="primaries.white"
                 _hover={{
-                  background: "primaries.yellow",
-                  color: "primaries.white"
+                  background: 'primaries.yellow',
+                  color: 'primaries.white'
                 }}
                 mr={3}
                 isLoading={loading}
-                form='edit-book'
+                form="edit-book"
               >
                 Submit
               </Button>
@@ -265,9 +296,9 @@ export default function EditBook({ book }: { book: Book }) {
                 color="primaries.yellow"
                 onClick={() => {
                   formik.resetForm({});
-                  onClose()
+                  onClose();
                 }}
-                form='edit-book'
+                form="edit-book"
               >
                 Cancel
               </Button>

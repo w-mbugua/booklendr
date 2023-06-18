@@ -60,7 +60,7 @@ const BookCard = ({ book }: BookCardProps) => {
             alt={book.title}
           />
         </GridItem>
-        <GridItem w="100%" colSpan={3}>
+        <GridItem w="100%" colSpan={4}>
           <Box>
             <Flex justifyContent="space-between" alignItems="baseline">
               <Badge
