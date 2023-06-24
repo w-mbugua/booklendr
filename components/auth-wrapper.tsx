@@ -22,7 +22,7 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
         flexDir="column"
         alignItems="start"
         // justifyContent="center"
-        backgroundImage="url('/bg5.png')"
+        backgroundImage="url('https://res.cloudinary.com/mbuguajoy/image/upload/v1687066120/pagepals/booklendr-auth.png')"
         backgroundSize="cover"
         backgroundPosition="center"
         backgroundRepeat="repeat"
