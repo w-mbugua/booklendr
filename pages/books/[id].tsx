@@ -1,4 +1,4 @@
-import BookCard from '@/components/book-card';
+import BookCard from '@/components/book/book-card';
 import { GetBookByIdDocument } from '@/generated/gql/graphql';
 import { useQuery } from '@apollo/client';
 import { CircularProgress, Flex, HStack, Text } from '@chakra-ui/react';
