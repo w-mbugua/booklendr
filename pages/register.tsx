@@ -54,7 +54,6 @@ function Register() {
     },
     validationSchema,
     onSubmit: async (values) => {
-      console.log(values);
       await register({ variables: { newMemberData: values } });
     }
   });

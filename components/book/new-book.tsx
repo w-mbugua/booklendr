@@ -47,7 +47,6 @@ export default function NewBook() {
 
   const initialRef = React.useRef(null);
 
-  console.log('DATA', data);
   const handleClose = () => {
     onClose();
     reset();

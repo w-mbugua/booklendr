@@ -35,8 +35,6 @@ export default function NotificationBadge({ pad = 0 }: { pad?: number }) {
       document: NotificationsDocument,
       variables: { userId: Number(data?.currentUser.id) },
       updateQuery: (prev, { subscriptionData }) => {
-        console.log({ subscriptionData });
-
         if (!subscriptionData) return prev;
         const newData = subscriptionData.data.newNotification;
 
@@ -51,12 +49,14 @@ export default function NotificationBadge({ pad = 0 }: { pad?: number }) {
   }, [data?.currentUser]);
 
   return (
-    <Box px={6} cursor='pointer'>
-      <Flex h='100%' alignItems='center'>
-
-        <Text onClick={onOpenNotifications}>Messages  {data?.currentUser && Number(data.currentUser.unreadMessages) > 0
-          ? ` (${data.currentUser.unreadMessages})`
-          : ''}</Text>
+    <Box px={6} cursor="pointer">
+      <Flex h="100%" alignItems="center">
+        <Text onClick={onOpenNotifications}>
+          Messages{' '}
+          {data?.currentUser && Number(data.currentUser.unreadMessages) > 0
+            ? ` (${data.currentUser.unreadMessages})`
+            : ''}
+        </Text>
       </Flex>
       {data?.currentUser && (
         <MessageNotifications

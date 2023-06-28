@@ -221,8 +221,6 @@ export default function EditBook({ book }: { book: Book }) {
                   size="lg"
                   p={2}
                   onChange={(event) => {
-                    console.log(event.currentTarget.files);
-
                     formik.setFieldValue(
                       'cover',
                       event.currentTarget.files

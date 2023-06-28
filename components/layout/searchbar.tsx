@@ -51,8 +51,6 @@ export default function SearchBar() {
           type: 'search',
           placeholder: 'Search for an Item',
           onChange: (event) => {
-            console.log((event.target as HTMLInputElement).value);
-
             setInputValue((event.target as HTMLInputElement).value);
           },
           id: 'search-books'
