@@ -26,6 +26,7 @@ export default function AuthWrapper({ children }: AuthWrapperProps) {
         backgroundSize="cover"
         backgroundPosition="center"
         backgroundRepeat="repeat"
+        backgroundColor="#213671 "
       >
         <Flex width="80%" justifyContent="end">
           <Button

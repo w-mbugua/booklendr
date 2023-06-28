@@ -135,7 +135,7 @@ function Login() {
           <Button
             type="submit"
             id="login-btn"
-            isLoading={formik.isSubmitting}
+            isLoading={formik.isSubmitting || loading}
             rightIcon={<ArrowForwardIcon />}
             bg="primaries.yellow"
             color="primaries.white"

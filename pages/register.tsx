@@ -165,6 +165,7 @@ function Register() {
             id="register-btn"
             colorScheme="blackAlpha"
             bg="primaries.yellow"
+            isLoading={formik.isSubmitting || loading}
           >
             Register
           </Button>
